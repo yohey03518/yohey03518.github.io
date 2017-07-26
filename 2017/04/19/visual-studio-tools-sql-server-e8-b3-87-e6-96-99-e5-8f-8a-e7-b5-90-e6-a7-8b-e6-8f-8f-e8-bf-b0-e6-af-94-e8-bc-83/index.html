@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>[Visual Studio tools] SQL Server資料及結構描述比較 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在專案開發的過程中，有時資料庫會分成測試資料庫與正式資料庫，又或是正在使用的資料庫要和備份的那一份做些比較看看差異在哪，來找出一些遺漏的資料或是欄位，這時不免就要透過一些工具來協助了。 在這邊簡單介紹在Visual Studio上針對SQL Server進行比對的小工具。 這邊使用AdventureWork2012資料庫當作範例。 首先先在local準備兩個相同的資料庫，名稱結尾分別設為Main及">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Visual Studio tools] SQL Server資料及結構描述比較">
+<meta property="og:url" content="http://yoursite.com/2017/04/19/visual-studio-tools-sql-server-e8-b3-87-e6-96-99-e5-8f-8a-e7-b5-90-e6-a7-8b-e6-8f-8f-e8-bf-b0-e6-af-94-e8-bc-83/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在專案開發的過程中，有時資料庫會分成測試資料庫與正式資料庫，又或是正在使用的資料庫要和備份的那一份做些比較看看差異在哪，來找出一些遺漏的資料或是欄位，這時不免就要透過一些工具來協助了。 在這邊簡單介紹在Visual Studio上針對SQL Server進行比對的小工具。 這邊使用AdventureWork2012資料庫當作範例。 首先先在local準備兩個相同的資料庫，名稱結尾分別設為Main及">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/04/1.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/04/2.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/04/3.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/04/4.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/04/5.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/04/6.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/04/7.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/04/8.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/04/9.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/04/10.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/04/13.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/04/12.png">
+<meta property="og:updated_time" content="2017-07-26T14:52:52.175Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Visual Studio tools] SQL Server資料及結構描述比較">
+<meta name="twitter:description" content="在專案開發的過程中，有時資料庫會分成測試資料庫與正式資料庫，又或是正在使用的資料庫要和備份的那一份做些比較看看差異在哪，來找出一些遺漏的資料或是欄位，這時不免就要透過一些工具來協助了。 在這邊簡單介紹在Visual Studio上針對SQL Server進行比對的小工具。 這邊使用AdventureWork2012資料庫當作範例。 首先先在local準備兩個相同的資料庫，名稱結尾分別設為Main及">
+<meta name="twitter:image" content="https://yohey66.files.wordpress.com/2017/04/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-visual-studio-tools-sql-server-e8-b3-87-e6-96-99-e5-8f-8a-e7-b5-90-e6-a7-8b-e6-8f-8f-e8-bf-b0-e6-af-94-e8-bc-83" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/19/visual-studio-tools-sql-server-e8-b3-87-e6-96-99-e5-8f-8a-e7-b5-90-e6-a7-8b-e6-8f-8f-e8-bf-b0-e6-af-94-e8-bc-83/" class="article-date">
+  <time datetime="2017-04-19T03:52:10.000Z" itemprop="datePublished">2017-04-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [Visual Studio tools] SQL Server資料及結構描述比較
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在專案開發的過程中，有時資料庫會分成測試資料庫與正式資料庫，又或是正在使用的資料庫要和備份的那一份做些比較看看差異在哪，來找出一些遺漏的資料或是欄位，這時不免就要透過一些工具來協助了。</p>
+<p>在這邊簡單介紹在Visual Studio上針對SQL Server進行比對的小工具。</p>
+<p>這邊使用AdventureWork2012資料庫當作範例。</p>
+<p>首先先在local準備兩個相同的資料庫，名稱結尾分別設為Main及Child，Main為主要在使用的資料庫，而Child則是必須follow Main資料庫去做更新的資料庫，如下</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/1.png" alt="1"></p>
+<p>接著我們將Child資料庫的Table Person.Address的欄位ModifiedDate刪除，</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/2.png" alt="2"></p>
+<p>接著開啟Visual Studio(此處使用VS 2015 Community)後，點選工作列-&gt;工具-&gt;SQL Server-&gt;新增結構描述比較</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/3.png" alt="3"></p>
+<p>接著在左邊選入Main資料庫，右邊選入Child資料庫，</p>
+<p>按下左上角的 「比較」即可看到結果：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/4.png" alt="4"></p>
+<p>依照結果的描述來說，Main相對於Child而言，在Person.Address資料表中多了一個欄位ModifiedDate，因此若Child要Follow Main的狀況來做更動，則必須新增此欄位。</p>
+<p>而這個小工具也已經幫我們準備好了，只要透過產生指令碼的按鈕(Alt+Shift+G)</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/5.png" alt="5"></p>
+<p>便會幫我們產生針對Child新增欄位的T-SQL指令了</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/6.png" alt="6"></p>
+<p>接著介紹資料內容的比較方式：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/7.png" alt="7"></p>
+<p>將Child資料庫的Person.EmailAddress EmailAddressID為1的EmailAddress由原先的”ken0@adventure-works.com”改為”newMail@gmail.com”</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/8.png" alt="8"></p>
+<p>接著回到VS上，點選「新增資料比較後」，會出現如下視窗，一樣在左側選入Main，右側選入Child，點選下一步，並勾選資料表，代表僅針對資料表資料做比較<img src="https://yohey66.files.wordpress.com/2017/04/9.png" alt="9"></p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/10.png" alt="10"></p>
+<p>按下完成，分析之後會出現如下畫面，會發現Person.EmailAddress中那筆不同的資料會被找出來</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/13.png" alt="13"></p>
+<p>接著同樣點選「產生指令碼」後，即可得到將Child與Main同步的指令，</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/12.png" alt="12.PNG"></p>
+<p>比較有趣的是在註解的第三行</p>
+<blockquote>
+<p>請在 localhost.AdventureWorks2012_Child (DESKTOP-4PFP88F\User) 上執行此指令碼，使它與 localhost.AdventureWorks2012_Main (DESKTOP-4PFP88F\User) 相同。<br>寫得相當詳細，執行此指令後可把Child改成與Main相同。</p>
+</blockquote>
+<p>後記：這項工具除了還可以針對View、Stored Procedure或是Function做比較，只要能在一部機器上連線到兩個不同位址的資料庫，則也可以順利的進行比對。若可善加利用，則可以減少許多在維護資料庫上所需耗費的成本。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/19/visual-studio-tools-sql-server-e8-b3-87-e6-96-99-e5-8f-8a-e7-b5-90-e6-a7-8b-e6-8f-8f-e8-bf-b0-e6-af-94-e8-bc-83/" data-id="cj5l58mix0015tkv3q2l9ru5i" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/20/leetcode-1-two-sum/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [LeetCode] 1. Two Sum
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/22/c-net-e9-80-8f-e9-81-8ejson-net-e9-80-b2-e8-a1-8cxml-e8-88-87object-e8-bd-89-e6-8f-9b/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[C#.NET] 透過Json.NET進行XML與Object轉換</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-NET-MVC/">C# .NET MVC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/好用工具分享/">好用工具分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分類/">未分類</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NET/">.NET</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KendoGrid/">KendoGrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XmlDocument/">XmlDocument</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XmlReader/">XmlReader</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/KendoGrid/" style="font-size: 10px;">KendoGrid</a> <a href="/tags/XmlDocument/" style="font-size: 10px;">XmlDocument</a> <a href="/tags/XmlReader/" style="font-size: 10px;">XmlReader</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/25/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/18/convert-big5-to-utf8/">Convert Big5 To UTF8</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/sonarlint-x-visual-studio-e5-8d-b3-e6-99-82-e7-9a-84-e7-a8-8b-e5-bc-8f-e7-a2-bc-e9-9d-9c-e6-85-8b-e6-8e-83-e6-8f-8f-e5-b7-a5-e5-85-b7/">SonarLint × Visual Studio -  即時的程式碼靜態掃描工具</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc/">[SQL Server]透過TABLOCKX語法以避免取號功能取到重複的值</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/30/sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c/">[SQL Server] Not In子查詢所返回的錯誤結果</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

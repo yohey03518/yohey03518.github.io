@@ -3,18 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | Hexo</title>
+  <title>[.NET] Word文件處理的好幫手 - DocX | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="在做專案時時常會有需要處理Word文件的情況，也會遇到由User提供範本要求開發人員依照此範本去依照程式做出需求，那身為開發人員除了依照此範本在程式刻出同樣的成品外，我們還可以透過引入此範本至程式中的方式，針對其中設定好要代換的部分進行代換，簡單的達成依照範本產出成本的需求，而在這裡簡單介紹好用的套件來協助開發人員在.NET Fremework下完成此項工作－－DocX。 CodePlex : h">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2017/07/25/hello-world/index.html">
+<meta property="og:title" content="[.NET] Word文件處理的好幫手 - DocX">
+<meta property="og:url" content="http://yoursite.com/2016/12/07/net-word-e6-96-87-e4-bb-b6-e8-99-95-e7-90-86-e7-9a-84-e5-a5-bd-e5-b9-ab-e6-89-8b-docx/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:updated_time" content="2017-07-25T14:02:56.798Z">
+<meta property="og:description" content="在做專案時時常會有需要處理Word文件的情況，也會遇到由User提供範本要求開發人員依照此範本去依照程式做出需求，那身為開發人員除了依照此範本在程式刻出同樣的成品外，我們還可以透過引入此範本至程式中的方式，針對其中設定好要代換的部分進行代換，簡單的達成依照範本產出成本的需求，而在這裡簡單介紹好用的套件來協助開發人員在.NET Fremework下完成此項工作－－DocX。 CodePlex : h">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2016/12/docx.jpg">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2016/12/word.jpg">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2016/12/main.jpg">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2016/12/result.jpg">
+<meta property="og:updated_time" content="2017-07-26T14:52:52.173Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="[.NET] Word文件處理的好幫手 - DocX">
+<meta name="twitter:description" content="在做專案時時常會有需要處理Word文件的情況，也會遇到由User提供範本要求開發人員依照此範本去依照程式做出需求，那身為開發人員除了依照此範本在程式刻出同樣的成品外，我們還可以透過引入此範本至程式中的方式，針對其中設定好要代換的部分進行代換，簡單的達成依照範本產出成本的需求，而在這裡簡單介紹好用的套件來協助開發人員在.NET Fremework下完成此項工作－－DocX。 CodePlex : h">
+<meta name="twitter:image" content="https://yohey66.files.wordpress.com/2016/12/docx.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -63,12 +68,16 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-net-word-e6-96-87-e4-bb-b6-e8-99-95-e7-90-86-e7-9a-84-e5-a5-bd-e5-b9-ab-e6-89-8b-docx" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/07/25/hello-world/" class="article-date">
-  <time datetime="2017-07-25T14:02:56.795Z" itemprop="datePublished">2017-07-25</time>
+    <a href="/2016/12/07/net-word-e6-96-87-e4-bb-b6-e8-99-95-e7-90-86-e7-9a-84-e5-a5-bd-e5-b9-ab-e6-89-8b-docx/" class="article-date">
+  <time datetime="2016-12-07T03:31:49.000Z" itemprop="datePublished">2016-12-07</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -77,7 +86,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      [.NET] Word文件處理的好幫手 - DocX
     </h1>
   
 
@@ -85,20 +94,41 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>在做專案時時常會有需要處理Word文件的情況，也會遇到由User提供範本要求開發人員依照此範本去依照程式做出需求，那身為開發人員除了依照此範本在程式刻出同樣的成品外，我們還可以透過引入此範本至程式中的方式，針對其中設定好要代換的部分進行代換，簡單的達成依照範本產出成本的需求，而在這裡簡單介紹好用的套件來協助開發人員在.NET Fremework下完成此項工作－－<a href="https://docx.codeplex.com" target="_blank" rel="external">DocX</a>。</p>
+<p>CodePlex :<a href="https://docx.codeplex.com" target="_blank" rel="external"> https://docx.codeplex.com</a></p>
+<p>License : <a href="http://docx.codeplex.com/license" target="_blank" rel="external">http://docx.codeplex.com/license</a></p>
+<p>在License上採用Ms-PL授權，簡單來說在使用上若有去針對原始碼做修改，則使用的專案也須公開原始碼；若是直接使用封裝好的套件，則專案無須將原始碼公開。</p>
+<p>以下簡單的介紹使用方式：</p>
+<p>首先在VS中可以簡單地透過Nuget進行安裝</p>
+<p><img src="https://yohey66.files.wordpress.com/2016/12/docx.jpg" alt="docx"></p>
+<p>接著準備一份測試文件，命名為testDoc.docx，儲存路徑為C:\TestDocx</p>
+<p><img src="https://yohey66.files.wordpress.com/2016/12/word.jpg" alt="word"></p>
+<p>程式中使用的簡單方式如下</p>
+<p><img src="https://yohey66.files.wordpress.com/2016/12/main.jpg" alt="main.jpg"></p>
+<p>[code language=”csharp”]</p>
+<p>static void Main(string[] args)<br>{<br>    // 指定範本來源路徑<br>    string templatePath = &quot;C:\TestDocx\testDoc.docx&quot;;</p>
+<pre><code>// 讀入該範本檔
+DocX document = DocX.Load(templatePath);
+
+// 取代字串
+document.ReplaceText(&amp;quot;#NAME#&amp;quot;, &amp;quot;Yohey66&amp;quot;);
+document.ReplaceText(&amp;quot;#ID#&amp;quot;, &amp;quot;A126123456&amp;quot;);
+
+// 指定成品儲存路徑及檔名並執行儲存
+string savePath = &amp;quot;C:\\TestDocx\\&amp;quot;;
+string fileName = string.Format(&amp;quot;result_{0}.docx&amp;quot;, DateTime.Now.ToString(&amp;quot;yyyyMMddHHmmss&amp;quot;));
+document.SaveAs(savePath + fileName);
+</code></pre><p>}</p>
+<p>[/code]</p>
+<p>最終程式會將成品儲存在指定的路徑</p>
+<p><img src="https://yohey66.files.wordpress.com/2016/12/result.jpg" alt="result"></p>
+<p>我們便可以透過自己習慣的方式將該檔案提供給使用者進行下載使用，開發人員便無需再看著範本自行刻出同樣的文件格式就可以達成同樣的需求。</p>
+<p>當然DocX還有其他的好功能可利用，下次有機會再進行分享。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/25/hello-world/" data-id="cj5l58mhp0005tkv3zasjatnd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/12/07/net-word-e6-96-87-e4-bb-b6-e8-99-95-e7-90-86-e7-9a-84-e5-a5-bd-e5-b9-ab-e6-89-8b-docx/" data-id="cj5l58mi9000ltkv3je0ugle7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -107,10 +137,19 @@
     
 <nav id="article-nav">
   
+    <a href="/2017/02/17/tdd-seleniumthe-geckodriver-exe-file-does-not-exist-e3-80-8d/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [Selenium]the geckodriver.exe file does not exist」
+        
+      </div>
+    </a>
   
-    <a href="/2017/07/18/convert-big5-to-utf8/" id="article-nav-older" class="article-nav-link-wrap">
+  
+    <a href="/2016/11/08/javascript-js-e7-9a-84local-variable/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Convert Big5 To UTF8</div>
+      <div class="article-nav-title">[JavaScript] JS的Local Variable</div>
     </a>
   
 </nav>

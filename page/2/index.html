@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-tdd-seleniumthe-geckodriver-exe-file-does-not-exist-e3-80-8d" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/17/tdd-seleniumthe-geckodriver-exe-file-does-not-exist-e3-80-8d/" class="article-date">
+  <time datetime="2017-02-17T15:48:39.000Z" itemprop="datePublished">2017-02-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/17/tdd-seleniumthe-geckodriver-exe-file-does-not-exist-e3-80-8d/">[Selenium]the geckodriver.exe file does not exist」</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近參考<a href="https://dotblogs.com.tw/hatelove/2012/12/10/learning-tdd-in-30-days-day8-integration-testing-and-web-ui-testing-by-selenium-and-webdriver" target="_blank" rel="external">91大的TDD教學</a>，試著使用Selenium進行UI Test，</p>
+<p>要測試一個普通的Web project，整體測試程式的程式碼來源和91大的文章相差不多，</p>
+<p>但在執行測試時卻出現了錯誤：</p>
+<p>結果訊息: 初始設定方法 SeleniumTests.UITestLogin.SetupTest 擲回例外狀況。OpenQA.Selenium.DriverServiceNotFoundException: OpenQA.Selenium.DriverServiceNotFoundException: The geckodriver.exe file does not exist in the current directory or in a directory on the PATH environment variable. The driver can be downloaded at <a href="https://github.com/mozilla/geckodriver/releases.。" target="_blank" rel="external">https://github.com/mozilla/geckodriver/releases.。</a></p>
+<p><img src="https://yohey66.files.wordpress.com/2017/02/seleniumtesterror.png" alt="seleniumtesterror"></p>
+<p>依照這個錯誤訊息的指示，去下載了geckodriver.exe這支程式，</p>
+<p>卻又不知道要放在什麼路徑下，</p>
+<p>於是本著(靠)Google工程師的本質，把錯誤訊息貼上去，果然在<a href="http://stackoverflow.com/questions/39016134/geckodriver-exe-not-in-current-directory-or-path-variable-selenium-2-53-1-fir" target="_blank" rel="external">stackoverflow</a>上得到了結果：</p>
+<blockquote>
+<p>Try to put the geckodriver.exe in your path: C:\Users\YourName\Documents\Visual Studio 2013\Projects\seleniump\seleniump\bin\Debug<br>總之就是將這支程式放到測試專案的bin/Debug目錄下即可。</p>
+</blockquote>
+<p>而這支程式(geckodriver.exe)的功能在其<a href="https://github.com/mozilla/geckodriver/blob/master/README.md" target="_blank" rel="external">Github</a>上也有解說：</p>
+<blockquote>
+<p>Proxy for using W3C WebDriver-compatible clients to interact with Gecko-based browsers.<br>總之就是協助測試程式可以啟動瀏覽器(Firefox)並對它下指令來執行我們的測試。</p>
+</blockquote>
+<p>&nbsp;</p>
+<p>不過在安裝好這支程式並執行測試後，發現Firefox被啟動了但測試程式仍執行不起來：<br>結果訊息:<br>測試方法 SeleniumTests.UITestLogin.TheUITestLoginTest 擲回例外狀況:<br>OpenQA.Selenium.NoSuchElementException: Unable to locate element: #loginLink</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/02/seleniumtesterror21.png" alt="seleniumtesterror2"></p>
+<p>仔細研究後，發現是Web沒有被啟動，也就是Web並沒有被放在IIS上運行，</p>
+<p>測試程式當然也無法針對我們的Web UI去做操作並測試。</p>
+<p>因此若是測試專案與Web專案是放在同個方案底下的狀況，只要透過「啟動但不偵錯」(Ctrl+F5)</p>
+<p>將Web運行在IIS上後，再次執行測試程式，便可以順利運行囉！</p>
+<p>&nbsp;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/02/17/tdd-seleniumthe-geckodriver-exe-file-does-not-exist-e3-80-8d/" data-id="cj5l58mir0013tkv3e2d90jb7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-net-word-e6-96-87-e4-bb-b6-e8-99-95-e7-90-86-e7-9a-84-e5-a5-bd-e5-b9-ab-e6-89-8b-docx" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/07/net-word-e6-96-87-e4-bb-b6-e8-99-95-e7-90-86-e7-9a-84-e5-a5-bd-e5-b9-ab-e6-89-8b-docx/" class="article-date">
+  <time datetime="2016-12-07T03:31:49.000Z" itemprop="datePublished">2016-12-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/07/net-word-e6-96-87-e4-bb-b6-e8-99-95-e7-90-86-e7-9a-84-e5-a5-bd-e5-b9-ab-e6-89-8b-docx/">[.NET] Word文件處理的好幫手 - DocX</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在做專案時時常會有需要處理Word文件的情況，也會遇到由User提供範本要求開發人員依照此範本去依照程式做出需求，那身為開發人員除了依照此範本在程式刻出同樣的成品外，我們還可以透過引入此範本至程式中的方式，針對其中設定好要代換的部分進行代換，簡單的達成依照範本產出成本的需求，而在這裡簡單介紹好用的套件來協助開發人員在.NET Fremework下完成此項工作－－<a href="https://docx.codeplex.com" target="_blank" rel="external">DocX</a>。</p>
+<p>CodePlex :<a href="https://docx.codeplex.com" target="_blank" rel="external"> https://docx.codeplex.com</a></p>
+<p>License : <a href="http://docx.codeplex.com/license" target="_blank" rel="external">http://docx.codeplex.com/license</a></p>
+<p>在License上採用Ms-PL授權，簡單來說在使用上若有去針對原始碼做修改，則使用的專案也須公開原始碼；若是直接使用封裝好的套件，則專案無須將原始碼公開。</p>
+<p>以下簡單的介紹使用方式：</p>
+<p>首先在VS中可以簡單地透過Nuget進行安裝</p>
+<p><img src="https://yohey66.files.wordpress.com/2016/12/docx.jpg" alt="docx"></p>
+<p>接著準備一份測試文件，命名為testDoc.docx，儲存路徑為C:\TestDocx</p>
+<p><img src="https://yohey66.files.wordpress.com/2016/12/word.jpg" alt="word"></p>
+<p>程式中使用的簡單方式如下</p>
+<p><img src="https://yohey66.files.wordpress.com/2016/12/main.jpg" alt="main.jpg"></p>
+<p>[code language=”csharp”]</p>
+<p>static void Main(string[] args)<br>{<br>    // 指定範本來源路徑<br>    string templatePath = &quot;C:\TestDocx\testDoc.docx&quot;;</p>
+<pre><code>// 讀入該範本檔
+DocX document = DocX.Load(templatePath);
+
+// 取代字串
+document.ReplaceText(&amp;quot;#NAME#&amp;quot;, &amp;quot;Yohey66&amp;quot;);
+document.ReplaceText(&amp;quot;#ID#&amp;quot;, &amp;quot;A126123456&amp;quot;);
+
+// 指定成品儲存路徑及檔名並執行儲存
+string savePath = &amp;quot;C:\\TestDocx\\&amp;quot;;
+string fileName = string.Format(&amp;quot;result_{0}.docx&amp;quot;, DateTime.Now.ToString(&amp;quot;yyyyMMddHHmmss&amp;quot;));
+document.SaveAs(savePath + fileName);
+</code></pre><p>}</p>
+<p>[/code]</p>
+<p>最終程式會將成品儲存在指定的路徑</p>
+<p><img src="https://yohey66.files.wordpress.com/2016/12/result.jpg" alt="result"></p>
+<p>我們便可以透過自己習慣的方式將該檔案提供給使用者進行下載使用，開發人員便無需再看著範本自行刻出同樣的文件格式就可以達成同樣的需求。</p>
+<p>當然DocX還有其他的好功能可利用，下次有機會再進行分享。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/12/07/net-word-e6-96-87-e4-bb-b6-e8-99-95-e7-90-86-e7-9a-84-e5-a5-bd-e5-b9-ab-e6-89-8b-docx/" data-id="cj5l58mi9000ltkv3je0ugle7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-javascript-js-e7-9a-84local-variable" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/08/javascript-js-e7-9a-84local-variable/" class="article-date">
+  <time datetime="2016-11-08T11:15:35.000Z" itemprop="datePublished">2016-11-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/08/javascript-js-e7-9a-84local-variable/">[JavaScript] JS的Local Variable</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天有幸看到了如下的JS code：</p>
+<p>[code language=”javascript”]</p>
+<p>function DoSomethingFunc(textA, textB) {<br>    if (textA == textB) {<br>        var myText = &quot;Hello, You got my Text!&quot;;<br>    }<br>    alert(myText);<br>}<br>[/code]</p>
+<p>在一般認知下，例如C#中，若這樣寫早就出現紅色毛毛蟲了，但實際執行到這段JS程式，卻可以實際alert這串文字而非拋錯誤訊息，真的是讓我驚呆了！！</p>
+<p>在JS Fiddle執行狀況如下</p>
+<p><a href="https://jsfiddle.net/adq2pdxL/" target="_blank" rel="external">jsfiddle</a></p>
+<p>經過同仁協助及查證後，發現在MSDN有針對JS的變數範圍做解說，其中最重要的兩句話如下：</p>
+<blockquote>
+<p><span id="mt1" class="sentence">JavaScript 有兩個範圍：全域和區域。</span>  <span id="mt2" class="sentence SentenceHover">在函式定義之外宣告的變數就是全域變數</span></p>
+<p>JavaScript 並不支援區塊範圍 (使用一組大括號 <span class="code">{. . .}</span> 定義新的範圍)。<br>(參考<a href="https://msdn.microsoft.com/zh-tw/library/bzt2dkta" target="_blank" rel="external">MSDN</a>)</p>
+</blockquote>
+<p>也就是說，JS在function中的變數宣告，是無視function內的大括號的，而在該篇說明下更有提到當JavaScript在執行函式時，會先掃一遍他所有的變數(包含放在if等等巢狀結構內)，執行到指派的那行再給予值(未執行到則為undefined)。</p>
+<p>透過這個特性，或許會讓我們在寫JavaScript Code時多了一分方便，卻也須多一分小心。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/08/javascript-js-e7-9a-84local-variable/" data-id="cj5l58mi0000btkv36koc53xm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-c-net-mvc-e5-8f-96-e5-be-97kendogrid-datasource-e6-99-82-e7-9a-84error-handling" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/04/c-net-mvc-e5-8f-96-e5-be-97kendogrid-datasource-e6-99-82-e7-9a-84error-handling/" class="article-date">
+  <time datetime="2016-11-04T06:23:29.000Z" itemprop="datePublished">2016-11-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/C-NET-MVC/">C# .NET MVC</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/04/c-net-mvc-e5-8f-96-e5-be-97kendogrid-datasource-e6-99-82-e7-9a-84error-handling/">[C# .NET MVC] 取得KendoGrid DataSource時的Error Handling</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>程式開發時常會有存檔的功能，而存檔成功或失敗的訊息顯示自己是看過許多的做法，也都有其優缺，但實作上來說都可順利達成功能。</p>
+<p>但今天遇到的問題是：KendoGrid透過DataSource傳參數向後端要資料的時候，因為在MVC架構下通常都是在Controller中使用JsonResult來做回傳資料結果，但也因此不知如何做ErrorHandling，舉例如下</p>
+<p>[code language=”csharp”]<br>[HttpPost]<br>public JsonResult GetGridData(ParameterModel model)<br>{<br>    var data = DataService.GetGridData(model);<br>    return Json(data);<br>}<br>[/code]</p>
+<p>如果單純使用這樣的寫法，若是在Service層發生例外狀況時，我們就只能任由Exception擺布了…</p>
+<p>因此，認為try catch的error handle是必要的：</p>
+<p>[code language=”csharp”]<br>[HttpPost]<br>public JsonResult GetGridData(ParameterModel model)<br>{<br>    try<br>    {<br>        var data = DataService.GetGridData(model);<br>        return Json(data);<br>    }<br>    catch (Exception e)<br>    {<br>    }<br>}<br>[/code]</p>
+<p>但是問題又來了，要求回傳Json格式的function，在catch exception後又該做何處理？回傳什麼？就算在catch時可以知道錯誤訊息內容，又該如何顯示在UI？</p>
+<p>研究之後，發現HTTP在處理Response Success或是Error的狀況是透過HTTP Status Code在做判斷，也就是說，若我們能在catch exception後透過修改Status Code告知瀏覽器處理狀況是失敗的，並將例外狀況的Message也傳回去，那便可以顯示出錯誤訊息。</p>
+<p>做法如下：</p>
+<p>在Kendo DataSource設定error event(參考<a href="http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#events-error" target="_blank" rel="external">Kendo官方文件</a>)：</p>
+<p>[code language=”javascript”]<br>error: function (e) {<br>    if (!$.isEmptyObject(e.errorThrown))<br>        ShowError(e.errorThrown); // Alert錯誤訊息<br>}<br>[/code]</p>
+<p>Controller設定如下：</p>
+<p>[code language=”csharp”]<br>[HttpPost]<br>public JsonResult GetGridData(ParameterModel model)<br>{<br>    try<br>    {<br>        var data = DataService.GetGridData(model);<br>        return Json(data);<br>    }<br>    catch (Exception e)<br>    {<br>        Response.StatusCode = 0;<br>        Response.StatusDescription = ex.Message;<br>        return null;<br>    }<br>}<br>[/code]</p>
+<p>比較值得說明的是在Line 11的部分為何給予了一個無定義的code 0，經過反覆的測試，發現Status Code為兩百多(2xx)時會被判定為成功，其餘狀況皆會進入error event中，</p>
+<p>(關於Status Code的內容，可參考<a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank" rel="external">Wiki</a>或是<a href="https://msdn.microsoft.com/zh-tw/library/system.net.httpstatuscode(v=vs.110" target="_blank" rel="external">MSDN</a>.aspx)中提供的列舉類型，更詳細的解釋可參考<a href="https://tools.ietf.org/html/rfc7231#section-6.1" target="_blank" rel="external">這裡</a>。)</p>
+<p>而若給予的Status Code是有被定義過的(如404代表Not Found)，在e.errorThrown便可以取得「Not Found」的訊息並且做顯示，但如果是無定義過的代碼(例如0)，便可以透過Line 12的設定給予自定義的錯誤訊息。</p>
+<p>其實0並不是個合法的Status Code(關於0的更多訊息，可參考<a href="http://stackoverflow.com/questions/3825581/does-an-http-status-code-of-0-have-any-meaning" target="_blank" rel="external">Stackoverflow</a>的回答)，</p>
+<p>但經測試只要不是2XX系列的Success代碼，都會進入到Error中，所以其實選用399或599這種沒被定義過的都可以有相同結果，只不過不同的code group有其不同意義，如4XX代表Client Error、5XX代表Server Error，因此選用0做為自定義的錯誤也避免與其他代碼混淆。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/04/c-net-mvc-e5-8f-96-e5-be-97kendogrid-datasource-e6-99-82-e7-9a-84error-handling/" data-id="cj5l58mhr0006tkv3uls51hzf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/KendoGrid/">KendoGrid</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-sql-server-e9-98-b2-e6-ad-a2-e8-aa-a4-e4-b8-8bsql-e6-8c-87-e4-bb-a4-e6-89-80-e9-80-a0-e6-88-90-e7-9a-84-e6-af-80-e6-bb-85-e6-80-a7-e5-be-8c-e6-9e-9c" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/13/sql-server-e9-98-b2-e6-ad-a2-e8-aa-a4-e4-b8-8bsql-e6-8c-87-e4-bb-a4-e6-89-80-e9-80-a0-e6-88-90-e7-9a-84-e6-af-80-e6-bb-85-e6-80-a7-e5-be-8c-e6-9e-9c/" class="article-date">
+  <time datetime="2016-10-13T09:43:29.000Z" itemprop="datePublished">2016-10-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/13/sql-server-e9-98-b2-e6-ad-a2-e8-aa-a4-e4-b8-8bsql-e6-8c-87-e4-bb-a4-e6-89-80-e9-80-a0-e6-88-90-e7-9a-84-e6-af-80-e6-bb-85-e6-80-a7-e5-be-8c-e6-9e-9c/">[SQL Server] 防止誤下SQL指令所造成的毀滅性後果</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前陣子要去刪除DB中某一筆代碼資料時，洋洋灑灑的下了DELETE FROM CODE_TABLE卻忘記加上WHERE條件，以至於造成了毀滅性的結果，</p>
+<p><img src="https://yohey66.files.wordpress.com/2016/10/efff.png" alt="efff"></p>
+<p>不過後來經過同事提醒，其實在下SQL時是可以很簡單的透過指令來做一層預防，網路上也早有許多說明，在這邊簡單做個紀錄如下：</p>
+<p>[code language=”sql”]<br>BEGIN TRAN<br>DELETE FROM CODE_TABLE<br>WHERE CODE_ID = ‘AA’<br>[/code]</p>
+<p>透過執行BEGIN TRAN便可以將後續執行的指令包入transaction中，</p>
+<p>接著執行我們主要的SQL後，可以先確認刪除的筆數結果是否符合預期，</p>
+<p>若符合預期，就下COMMIT；若發現有問題，就執行ROLLBACK</p>
+<p>[code language=”sql”] COMMIT –確認無誤<br>ROLLBACK –有問題，趕緊下這道<br>[/code]</p>
+<p>透過簡單的指令，便可以預防毀滅性的結果囉。</p>
+<p>不過最重要的還是在處理這種底層的動作時要更加小心才是。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/13/sql-server-e9-98-b2-e6-ad-a2-e8-aa-a4-e4-b8-8bsql-e6-8c-87-e4-bb-a4-e6-89-80-e9-80-a0-e6-88-90-e7-9a-84-e6-af-80-e6-bb-85-e6-80-a7-e5-be-8c-e6-9e-9c/" data-id="cj5l58mie000stkv36lk0uh5h" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-c-net-mvc-e8-a7-a3-e6-b1-baxmlreader-readelementcontentas-e6-96-b9-e6-b3-95-e6-9c-83-e8-b7-b3-e9-81-8e-e5-85-83-e7-b4-a0-e4-b9-8b-e6-9b-bf-e4-bb-a3-e6-96-b9-e6-a1-88" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/04/c-net-mvc-e8-a7-a3-e6-b1-baxmlreader-readelementcontentas-e6-96-b9-e6-b3-95-e6-9c-83-e8-b7-b3-e9-81-8e-e5-85-83-e7-b4-a0-e4-b9-8b-e6-9b-bf-e4-bb-a3-e6-96-b9-e6-a1-88/" class="article-date">
+  <time datetime="2016-10-04T07:29:41.000Z" itemprop="datePublished">2016-10-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/C-NET-MVC/">C# .NET MVC</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/04/c-net-mvc-e8-a7-a3-e6-b1-baxmlreader-readelementcontentas-e6-96-b9-e6-b3-95-e6-9c-83-e8-b7-b3-e9-81-8e-e5-85-83-e7-b4-a0-e4-b9-8b-e6-9b-bf-e4-bb-a3-e6-96-b9-e6-a1-88/">[.NET MVC] 解決XmlReader ReadElementContentAs* 方法會跳過元素之替代方案</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近專案開發上處理到XML格式的文件，在沒碰過的情況下試著用XmlReader來處理如下的XML，</p>
+<p>[code language=”xml”]<br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<br>&lt;RESPONSE&gt;<br> &lt;HEADER&gt;<br>  &lt;UserID&gt;1234567&lt;/UserID&gt;<br>  &lt;UserName&gt;王曉明&lt;/UserName&gt;<br>  &lt;UserDesc&gt;handsome&lt;/UserDesc&gt;<br> &lt;/HEADER&gt;<br>&lt;/RESPONSE&gt;<br>[/code]</p>
+<p>處理的程式碼如下：</p>
+<p>[code language=”csharp”]<br>// xmlText為上方xml字串<br>using (XmlReader reader = XmlReader.Create(new StringReader(xmlText)))<br>{<br>  reader.ReadToFollowing(&quot;UserID&quot;);<br>  string UserID = reader.ReadElementContentAsString();<br>  reader.ReadToFollowing(&quot;UserName&quot;);<br>  string UserName = reader.ReadElementContentAsString();<br>  reader.ReadToFollowing(&quot;UserDesc&quot;);<br>  string UserDesc = reader.ReadElementContentAsString();<br>  /<em> More Code .. </em>/<br>}<br>[/code]<br>參考網址: <a href="https://msdn.microsoft.com/en-us/library/cc189056%28v=vs.95%29.aspx?f=255&amp;MSPPError=-2147217396" target="_blank" rel="external">MSDN</a></p>
+<p>UserID的確可以順利取到，但當執行完Line 6時，會發現reader此時讀取到的是「None」，</p>
+<p><img src="https://yohey66.files.wordpress.com/2016/10/noeno.png" alt="noeno"></p>
+<p>當初卡在這邊也是納悶不已，之後努力查資料後，發現在ReadElementContentAsString方法上，</p>
+<p>有提到這件事情：</p>
+<blockquote>
+<p>“This method reads the start tag, the contents of the element, and moves the reader past the end element tag.”(<a href="https://msdn.microsoft.com/en-us/library/ms162529(v=vs.110" target="_blank" rel="external">MSDN</a>.aspx))<br>因此當ReadElementContentAsString讀取完後，會直接往下讀取接著的下一個元素，<br>不信的話可以自行試試看，當line 5執行完後的reader會指在UserName的元素上，而我們又執行了一次ReadToFollowing(“UserName”)，讀取器則會直接往下搜尋UserName而直接忽略目前所在的元素，故會達不到我們的需求。</p>
+</blockquote>
+<p>要解決這個問題，在Stackoverflow有人提出了方法，改用XmlDouument，</p>
+<p><a href="http://stackoverflow.com/questions/24991218/c-sharp-xmlreader-skips-nodes-after-using-readelementcontentas" target="_blank" rel="external">(c# XMLReader skips nodes after using ReadElementContentAs</a>)</p>
+<p>參考後的實作如下：</p>
+<p>[code language=”csharp”]<br>XmlDocument xmlDoc = new XmlDocument();<br>xmlDoc.LoadXml(xmlText);<br>string UserID = xmlDoc.SelectSingleNode(&quot;/RESPONSE/HEADER/UserID&quot;).InnerText;<br>string UserName = xmlDoc.SelectSingleNode(&quot;/RESPONSE/HEADER/UserName&quot;).InnerText;<br>string UserDesc = xmlDoc.SelectSingleNode(&quot;/RESPONSE/HEADER/UserDesc&quot;).InnerText;<br>[/code]</p>
+<p>如此一來，便可順利避開XmlReader的限制，透過XmlDocument就可以使用”/“的方式自由地往下巡覽。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/04/c-net-mvc-e8-a7-a3-e6-b1-baxmlreader-readelementcontentas-e6-96-b9-e6-b3-95-e6-9c-83-e8-b7-b3-e9-81-8e-e5-85-83-e7-b4-a0-e4-b9-8b-e6-9b-bf-e4-bb-a3-e6-96-b9-e6-a1-88/" data-id="cj5l58mhv0008tkv3q5hlgzpk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/XmlDocument/">XmlDocument</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/XmlReader/">XmlReader</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-NET-MVC/">C# .NET MVC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/好用工具分享/">好用工具分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分類/">未分類</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NET/">.NET</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KendoGrid/">KendoGrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XmlDocument/">XmlDocument</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XmlReader/">XmlReader</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/KendoGrid/" style="font-size: 10px;">KendoGrid</a> <a href="/tags/XmlDocument/" style="font-size: 10px;">XmlDocument</a> <a href="/tags/XmlReader/" style="font-size: 10px;">XmlReader</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/25/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/18/convert-big5-to-utf8/">Convert Big5 To UTF8</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/sonarlint-x-visual-studio-e5-8d-b3-e6-99-82-e7-9a-84-e7-a8-8b-e5-bc-8f-e7-a2-bc-e9-9d-9c-e6-85-8b-e6-8e-83-e6-8f-8f-e5-b7-a5-e5-85-b7/">SonarLint × Visual Studio -  即時的程式碼靜態掃描工具</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc/">[SQL Server]透過TABLOCKX語法以避免取號功能取到重複的值</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/30/sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c/">[SQL Server] Not In子查詢所返回的錯誤結果</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

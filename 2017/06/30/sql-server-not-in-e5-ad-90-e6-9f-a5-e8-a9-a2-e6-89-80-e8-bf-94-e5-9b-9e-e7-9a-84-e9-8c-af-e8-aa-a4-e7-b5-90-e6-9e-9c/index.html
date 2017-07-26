@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>[SQL Server] Not In子查詢所返回的錯誤結果 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="SQL Server中使用了Not In 子查詢時，若包含null值，則會使查詢結果不如預期。 舉例如下： 首先建立一個主要的Table (MainTable)並給予值a.g.h   接著建立一個Temp Table並塞入a.b.c.d.e及null值  接著透過Not In來濾掉MainTable中不存在Temp的值， 預期應該是可以得到g.h的結果， 但執行後卻發現得到的結果是空的，與預期結果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[SQL Server] Not In子查詢所返回的錯誤結果">
+<meta property="og:url" content="http://yoursite.com/2017/06/30/sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="SQL Server中使用了Not In 子查詢時，若包含null值，則會使查詢結果不如預期。 舉例如下： 首先建立一個主要的Table (MainTable)並給予值a.g.h   接著建立一個Temp Table並塞入a.b.c.d.e及null值  接著透過Not In來濾掉MainTable中不存在Temp的值， 預期應該是可以得到g.h的結果， 但執行後卻發現得到的結果是空的，與預期結果">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/createmain.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/maintable.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/temptabl.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/result1.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/e7ad89e583b9e8bd89e68f9b.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/exam.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/notexists.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/ansitest1.png">
+<meta property="og:updated_time" content="2017-07-26T14:52:52.176Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[SQL Server] Not In子查詢所返回的錯誤結果">
+<meta name="twitter:description" content="SQL Server中使用了Not In 子查詢時，若包含null值，則會使查詢結果不如預期。 舉例如下： 首先建立一個主要的Table (MainTable)並給予值a.g.h   接著建立一個Temp Table並塞入a.b.c.d.e及null值  接著透過Not In來濾掉MainTable中不存在Temp的值， 預期應該是可以得到g.h的結果， 但執行後卻發現得到的結果是空的，與預期結果">
+<meta name="twitter:image" content="https://yohey66.files.wordpress.com/2017/06/createmain.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/30/sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c/" class="article-date">
+  <time datetime="2017-06-29T16:33:39.000Z" itemprop="datePublished">2017-06-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [SQL Server] Not In子查詢所返回的錯誤結果
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>SQL Server中使用了Not In 子查詢時，若包含null值，則會使查詢結果不如預期。</p>
+<p>舉例如下：</p>
+<p>首先建立一個主要的Table (MainTable)並給予值a.g.h</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/createmain.png" alt="CreateMain"></p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/maintable.png" alt="MainTable"></p>
+<p>接著建立一個Temp Table並塞入a.b.c.d.e及null值</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/temptabl.png" alt="Temptabl"></p>
+<p>接著透過Not In來濾掉MainTable中不存在Temp的值，</p>
+<p>預期應該是可以得到g.h的結果，</p>
+<p>但執行後卻發現得到的結果是空的，與預期結果不符</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/result1.png" alt="Result1"></p>
+<p>發生上述狀況，推斷是Not In出了些問題。</p>
+<p>經過了解，Not In在此例子中，使用時可以等價轉換成以下SQL</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/e7ad89e583b9e8bd89e68f9b.png" alt="等價轉換"></p>
+<p>問題就出在Line43－－與NULL值做比對</p>
+<blockquote>
+<p>當 SET ANSI_NULLS 是 ON 時，比較一個或多個 Null 運算式不會產生 TRUE 或 FALSE 的結果，而會產生 UNKNOWN。這是因為未知的值無法與任何值進行邏輯比較。如果運算式與常值 NULL 比較，或是兩個運算式互相比較但其中有一個是 NULL 值，就會發生此狀況。(<a href="https://technet.microsoft.com/zh-tw/library/ms191270(v=sql.105" target="_blank" rel="external">Technet</a>.aspx))<br>在沒特別設置的情況下，ANSI_NULLS 皆是預設為ON，</p>
+</blockquote>
+<p>因此透過以上敘述，與NULL值的比對皆會回傳UNKNOWN，</p>
+<p>而UNKNOWN在boolean的比對中意義則是false，</p>
+<p>故才會有如上的結果。</p>
+<p>總之在正常情況下，NULL與任何值比對的結果皆會是false，舉例如下：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/exam.png" alt="exam"></p>
+<p>解決辦法： 使用Not Exists語法</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/notexists.png" alt="notexists"></p>
+<p>透過Not Exists的寫法，針對NULL的比對只會在單一結果中回傳false，</p>
+<p>而不會如Not In般影響全部的結果。</p>
+<p>因此在使用上盡可能避免使用Not In語法，</p>
+<p>除結果的不準確性外，尚有其效能問題，這部分有機會再來談談。</p>
+<p>&nbsp;</p>
+<p>補充：ANSI_NULLS設定 (<a href="https://docs.microsoft.com/en-us/sql/t-sql/statements/set-ansi-nulls-transact-sql" target="_blank" rel="external">Microsoft Docs</a>)</p>
+<p>為了使NULL比對遵循ISO標準，故有此項設定，也預設為ON，</p>
+<p>使得使用「=」或「&lt;&gt;」比對NULL值時必定回傳false之結果，</p>
+<p>因此若設定為OFF，則可以正常使用：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/ansitest1.png" alt="ansitest"></p>
+<p>&nbsp;</p>
+<p>要注意的是，若更動此設定值，僅會對單一connection有效，</p>
+<p>(全域更動：ALTER DATABASE [DB_NAME] SET ANSI_NULLS OFF WITH NO_WAIT)</p>
+<p>然而官方文件也提醒在未來的SQL Server版本中，</p>
+<p>將不再支援更改此設定值了，</p>
+<p>也因此大家還是乖乖的遵循ISO標準來思考如何撰寫SQL吧！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/06/30/sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c/" data-id="cj5l58min000ztkv3waev1qbh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/11/sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [SQL Server]透過TABLOCKX語法以避免取號功能取到重複的值
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/29/leetcode-3-longest-substring-without-repeating-characters/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[LeetCode] 3. Longest Substring Without Repeating Characters</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-NET-MVC/">C# .NET MVC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/好用工具分享/">好用工具分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分類/">未分類</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NET/">.NET</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KendoGrid/">KendoGrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XmlDocument/">XmlDocument</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XmlReader/">XmlReader</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/KendoGrid/" style="font-size: 10px;">KendoGrid</a> <a href="/tags/XmlDocument/" style="font-size: 10px;">XmlDocument</a> <a href="/tags/XmlReader/" style="font-size: 10px;">XmlReader</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/25/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/18/convert-big5-to-utf8/">Convert Big5 To UTF8</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/sonarlint-x-visual-studio-e5-8d-b3-e6-99-82-e7-9a-84-e7-a8-8b-e5-bc-8f-e7-a2-bc-e9-9d-9c-e6-85-8b-e6-8e-83-e6-8f-8f-e5-b7-a5-e5-85-b7/">SonarLint × Visual Studio -  即時的程式碼靜態掃描工具</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc/">[SQL Server]透過TABLOCKX語法以避免取號功能取到重複的值</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/30/sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c/">[SQL Server] Not In子查詢所返回的錯誤結果</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

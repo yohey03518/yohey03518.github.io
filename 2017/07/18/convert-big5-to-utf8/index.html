@@ -3,18 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | Hexo</title>
+  <title>Convert Big5 To UTF8 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="前陣子專案在放上SonarQube掃描時， 發生了部分檔案無法掃描的情況， 追查後發現是專案中部份檔案的編碼(ANSI，中文為Big5)和設定(UTF8)不符， 因而有了此需求。 要將檔案轉換成UTF8編碼， 可以很簡單的使用Notepad++的轉碼功能做轉換：  但是因為專案相當龐大， 不太可能一一去做轉換， 勢必要透過一些工具去處理， 網路上這類的轉碼工具的確是有許多， 但分析了一下自身的需求">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2017/07/25/hello-world/index.html">
+<meta property="og:title" content="Convert Big5 To UTF8">
+<meta property="og:url" content="http://yoursite.com/2017/07/18/convert-big5-to-utf8/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:updated_time" content="2017-07-25T14:02:56.798Z">
+<meta property="og:description" content="前陣子專案在放上SonarQube掃描時， 發生了部分檔案無法掃描的情況， 追查後發現是專案中部份檔案的編碼(ANSI，中文為Big5)和設定(UTF8)不符， 因而有了此需求。 要將檔案轉換成UTF8編碼， 可以很簡單的使用Notepad++的轉碼功能做轉換：  但是因為專案相當龐大， 不太可能一一去做轉換， 勢必要透過一些工具去處理， 網路上這類的轉碼工具的確是有許多， 但分析了一下自身的需求">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/07/notepadpp.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/07/e6ba96e58299e6aa94e6a188.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/07/result.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/07/auth.png">
+<meta property="og:updated_time" content="2017-07-26T14:52:52.176Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="Convert Big5 To UTF8">
+<meta name="twitter:description" content="前陣子專案在放上SonarQube掃描時， 發生了部分檔案無法掃描的情況， 追查後發現是專案中部份檔案的編碼(ANSI，中文為Big5)和設定(UTF8)不符， 因而有了此需求。 要將檔案轉換成UTF8編碼， 可以很簡單的使用Notepad++的轉碼功能做轉換：  但是因為專案相當龐大， 不太可能一一去做轉換， 勢必要透過一些工具去處理， 網路上這類的轉碼工具的確是有許多， 但分析了一下自身的需求">
+<meta name="twitter:image" content="https://yohey66.files.wordpress.com/2017/07/notepadpp.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -63,12 +68,16 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-convert-big5-to-utf8" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/07/25/hello-world/" class="article-date">
-  <time datetime="2017-07-25T14:02:56.795Z" itemprop="datePublished">2017-07-25</time>
+    <a href="/2017/07/18/convert-big5-to-utf8/" class="article-date">
+  <time datetime="2017-07-18T04:01:33.000Z" itemprop="datePublished">2017-07-18</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -77,7 +86,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      Convert Big5 To UTF8
     </h1>
   
 
@@ -85,20 +94,56 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>前陣子專案在放上SonarQube掃描時，</p>
+<p>發生了部分檔案無法掃描的情況，</p>
+<p>追查後發現是專案中部份檔案的編碼(ANSI，中文為Big5)和設定(UTF8)不符，</p>
+<p>因而有了此需求。</p>
+<p>要將檔案轉換成UTF8編碼，</p>
+<p>可以很簡單的使用Notepad++的轉碼功能做轉換：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/notepadpp.png" alt="notepadpp"></p>
+<p>但是因為專案相當龐大，</p>
+<p>不太可能一一去做轉換，</p>
+<p>勢必要透過一些工具去處理，</p>
+<p>網路上這類的轉碼工具的確是有許多，</p>
+<p>但分析了一下自身的需求：</p>
+<ol>
+<li>找出某路徑底下所有.cs的檔案</li>
+<li>檢查該檔案是否為Big5編碼</li>
+<li>若是則做轉換<br>簡單的轉碼工具似乎是無法很直接的滿足需求，</li>
+</ol>
+<p>那就來試著寫一個吧！</p>
+<p>&nbsp;</p>
+<p>首先因只有部分檔案有編碼問題，</p>
+<p>故不希望有將UTF8的檔案進行讀出後再存成UTF8的動作，</p>
+<p>所以需要有個方法判斷某檔案是否為Big5編碼，</p>
+<p>這邊參考黑大的文章(<a href="http://blog.darkthread.net/post-2012-04-11-detect-big5-encoding.aspx" target="_blank" rel="external">CODE-偵測檔案是否為BIG5編碼</a>)並做點修改及說明，</p>
+<p>而有了以下判斷方法：</p>
+<p><a href="https://gist.github.com/yohey03518/ad99d05864993b22e4cb8bad7a39f058" target="_blank" rel="external">https://gist.github.com/yohey03518/ad99d05864993b22e4cb8bad7a39f058</a></p>
+<p>接下來就是掃出某路徑底下的檔案後判斷編碼並做轉換：</p>
+<p><a href="https://gist.github.com/yohey03518/3fd984a6cfe0c92c7482cbb4584e94dd" target="_blank" rel="external">https://gist.github.com/yohey03518/3fd984a6cfe0c92c7482cbb4584e94dd</a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>都準備完成了，來進行實驗：</p>
+<p>將剛剛的主程式複製一份並透過Notepad++轉換成Big5(原先為UTF8編碼)</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/e6ba96e58299e6aa94e6a188.png" alt="準備檔案"></p>
+<p>把App.config的路徑調整好後，執行程式結果如下：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/result.png" alt="Result"></p>
+<p>&nbsp;</p>
+<p>至於如何驗證成功轉成UTF8編碼，</p>
+<p>這邊是簡單的使用Windows的記事本，</p>
+<p>打開檔案後選擇另存新檔，</p>
+<p>若編碼預設是ＵTF-8的話代表檔案原先已經是UTF-8編碼囉！</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/auth.png" alt="Auth"></p>
+<p>&nbsp;</p>
+<p>補充：</p>
+<p>使用Cygwin、PowerShell或是Linux下的Terminal進行編碼轉換</p>
+<p><a href="https://superuser.com/questions/27060/batch-convert-files-for-encoding" target="_blank" rel="external">https://superuser.com/questions/27060/batch-convert-files-for-encoding</a></p>
+<p>&nbsp;</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/25/hello-world/" data-id="cj5l58mhp0005tkv3zasjatnd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/18/convert-big5-to-utf8/" data-id="cj5l58mhl0004tkv3e7wf650t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -107,10 +152,19 @@
     
 <nav id="article-nav">
   
+    <a href="/2017/07/25/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
   
-    <a href="/2017/07/18/convert-big5-to-utf8/" id="article-nav-older" class="article-nav-link-wrap">
+  
+    <a href="/2017/07/11/sonarlint-x-visual-studio-e5-8d-b3-e6-99-82-e7-9a-84-e7-a8-8b-e5-bc-8f-e7-a2-bc-e9-9d-9c-e6-85-8b-e6-8e-83-e6-8f-8f-e5-b7-a5-e5-85-b7/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Convert Big5 To UTF8</div>
+      <div class="article-nav-title">SonarLint × Visual Studio -  即時的程式碼靜態掃描工具</div>
     </a>
   
 </nav>

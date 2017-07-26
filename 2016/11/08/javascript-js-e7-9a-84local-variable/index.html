@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | Hexo</title>
+  <title>[JavaScript] JS的Local Variable | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="今天有幸看到了如下的JS code： [code language=”javascript”] function DoSomethingFunc(textA, textB) {    if (textA == textB) {        var myText = &amp;quot;Hello, You got my Text!&amp;quot;;    }    alert(myText);}[/code">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2017/07/25/hello-world/index.html">
+<meta property="og:title" content="[JavaScript] JS的Local Variable">
+<meta property="og:url" content="http://yoursite.com/2016/11/08/javascript-js-e7-9a-84local-variable/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:updated_time" content="2017-07-25T14:02:56.798Z">
+<meta property="og:description" content="今天有幸看到了如下的JS code： [code language=”javascript”] function DoSomethingFunc(textA, textB) {    if (textA == textB) {        var myText = &amp;quot;Hello, You got my Text!&amp;quot;;    }    alert(myText);}[/code">
+<meta property="og:updated_time" content="2017-07-26T14:52:52.174Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="[JavaScript] JS的Local Variable">
+<meta name="twitter:description" content="今天有幸看到了如下的JS code： [code language=”javascript”] function DoSomethingFunc(textA, textB) {    if (textA == textB) {        var myText = &amp;quot;Hello, You got my Text!&amp;quot;;    }    alert(myText);}[/code">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -63,12 +63,16 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-javascript-js-e7-9a-84local-variable" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/07/25/hello-world/" class="article-date">
-  <time datetime="2017-07-25T14:02:56.795Z" itemprop="datePublished">2017-07-25</time>
+    <a href="/2016/11/08/javascript-js-e7-9a-84local-variable/" class="article-date">
+  <time datetime="2016-11-08T11:15:35.000Z" itemprop="datePublished">2016-11-08</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -77,7 +81,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      [JavaScript] JS的Local Variable
     </h1>
   
 
@@ -85,20 +89,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>今天有幸看到了如下的JS code：</p>
+<p>[code language=”javascript”]</p>
+<p>function DoSomethingFunc(textA, textB) {<br>    if (textA == textB) {<br>        var myText = &quot;Hello, You got my Text!&quot;;<br>    }<br>    alert(myText);<br>}<br>[/code]</p>
+<p>在一般認知下，例如C#中，若這樣寫早就出現紅色毛毛蟲了，但實際執行到這段JS程式，卻可以實際alert這串文字而非拋錯誤訊息，真的是讓我驚呆了！！</p>
+<p>在JS Fiddle執行狀況如下</p>
+<p><a href="https://jsfiddle.net/adq2pdxL/" target="_blank" rel="external">jsfiddle</a></p>
+<p>經過同仁協助及查證後，發現在MSDN有針對JS的變數範圍做解說，其中最重要的兩句話如下：</p>
+<blockquote>
+<p><span id="mt1" class="sentence">JavaScript 有兩個範圍：全域和區域。</span>  <span id="mt2" class="sentence SentenceHover">在函式定義之外宣告的變數就是全域變數</span></p>
+<p>JavaScript 並不支援區塊範圍 (使用一組大括號 <span class="code">{. . .}</span> 定義新的範圍)。<br>(參考<a href="https://msdn.microsoft.com/zh-tw/library/bzt2dkta" target="_blank" rel="external">MSDN</a>)</p>
+</blockquote>
+<p>也就是說，JS在function中的變數宣告，是無視function內的大括號的，而在該篇說明下更有提到當JavaScript在執行函式時，會先掃一遍他所有的變數(包含放在if等等巢狀結構內)，執行到指派的那行再給予值(未執行到則為undefined)。</p>
+<p>透過這個特性，或許會讓我們在寫JavaScript Code時多了一分方便，卻也須多一分小心。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/25/hello-world/" data-id="cj5l58mhp0005tkv3zasjatnd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/08/javascript-js-e7-9a-84local-variable/" data-id="cj5l58mi0000btkv36koc53xm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -107,10 +115,19 @@
     
 <nav id="article-nav">
   
+    <a href="/2016/12/07/net-word-e6-96-87-e4-bb-b6-e8-99-95-e7-90-86-e7-9a-84-e5-a5-bd-e5-b9-ab-e6-89-8b-docx/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [.NET] Word文件處理的好幫手 - DocX
+        
+      </div>
+    </a>
   
-    <a href="/2017/07/18/convert-big5-to-utf8/" id="article-nav-older" class="article-nav-link-wrap">
+  
+    <a href="/2016/11/04/c-net-mvc-e5-8f-96-e5-be-97kendogrid-datasource-e6-99-82-e7-9a-84error-handling/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Convert Big5 To UTF8</div>
+      <div class="article-nav-title">[C# .NET MVC] 取得KendoGrid DataSource時的Error Handling</div>
     </a>
   
 </nav>

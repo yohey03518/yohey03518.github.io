@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>[C# .NET MVC] 取得KendoGrid DataSource時的Error Handling | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="程式開發時常會有存檔的功能，而存檔成功或失敗的訊息顯示自己是看過許多的做法，也都有其優缺，但實作上來說都可順利達成功能。 但今天遇到的問題是：KendoGrid透過DataSource傳參數向後端要資料的時候，因為在MVC架構下通常都是在Controller中使用JsonResult來做回傳資料結果，但也因此不知如何做ErrorHandling，舉例如下 [code language=”cshar">
+<meta name="keywords" content=".NET,KendoGrid">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[C# .NET MVC] 取得KendoGrid DataSource時的Error Handling">
+<meta property="og:url" content="http://yoursite.com/2016/11/04/c-net-mvc-e5-8f-96-e5-be-97kendogrid-datasource-e6-99-82-e7-9a-84error-handling/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="程式開發時常會有存檔的功能，而存檔成功或失敗的訊息顯示自己是看過許多的做法，也都有其優缺，但實作上來說都可順利達成功能。 但今天遇到的問題是：KendoGrid透過DataSource傳參數向後端要資料的時候，因為在MVC架構下通常都是在Controller中使用JsonResult來做回傳資料結果，但也因此不知如何做ErrorHandling，舉例如下 [code language=”cshar">
+<meta property="og:updated_time" content="2017-07-26T14:52:52.173Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[C# .NET MVC] 取得KendoGrid DataSource時的Error Handling">
+<meta name="twitter:description" content="程式開發時常會有存檔的功能，而存檔成功或失敗的訊息顯示自己是看過許多的做法，也都有其優缺，但實作上來說都可順利達成功能。 但今天遇到的問題是：KendoGrid透過DataSource傳參數向後端要資料的時候，因為在MVC架構下通常都是在Controller中使用JsonResult來做回傳資料結果，但也因此不知如何做ErrorHandling，舉例如下 [code language=”cshar">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-c-net-mvc-e5-8f-96-e5-be-97kendogrid-datasource-e6-99-82-e7-9a-84error-handling" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/04/c-net-mvc-e5-8f-96-e5-be-97kendogrid-datasource-e6-99-82-e7-9a-84error-handling/" class="article-date">
+  <time datetime="2016-11-04T06:23:29.000Z" itemprop="datePublished">2016-11-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/C-NET-MVC/">C# .NET MVC</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [C# .NET MVC] 取得KendoGrid DataSource時的Error Handling
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>程式開發時常會有存檔的功能，而存檔成功或失敗的訊息顯示自己是看過許多的做法，也都有其優缺，但實作上來說都可順利達成功能。</p>
+<p>但今天遇到的問題是：KendoGrid透過DataSource傳參數向後端要資料的時候，因為在MVC架構下通常都是在Controller中使用JsonResult來做回傳資料結果，但也因此不知如何做ErrorHandling，舉例如下</p>
+<p>[code language=”csharp”]<br>[HttpPost]<br>public JsonResult GetGridData(ParameterModel model)<br>{<br>    var data = DataService.GetGridData(model);<br>    return Json(data);<br>}<br>[/code]</p>
+<p>如果單純使用這樣的寫法，若是在Service層發生例外狀況時，我們就只能任由Exception擺布了…</p>
+<p>因此，認為try catch的error handle是必要的：</p>
+<p>[code language=”csharp”]<br>[HttpPost]<br>public JsonResult GetGridData(ParameterModel model)<br>{<br>    try<br>    {<br>        var data = DataService.GetGridData(model);<br>        return Json(data);<br>    }<br>    catch (Exception e)<br>    {<br>    }<br>}<br>[/code]</p>
+<p>但是問題又來了，要求回傳Json格式的function，在catch exception後又該做何處理？回傳什麼？就算在catch時可以知道錯誤訊息內容，又該如何顯示在UI？</p>
+<p>研究之後，發現HTTP在處理Response Success或是Error的狀況是透過HTTP Status Code在做判斷，也就是說，若我們能在catch exception後透過修改Status Code告知瀏覽器處理狀況是失敗的，並將例外狀況的Message也傳回去，那便可以顯示出錯誤訊息。</p>
+<p>做法如下：</p>
+<p>在Kendo DataSource設定error event(參考<a href="http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#events-error" target="_blank" rel="external">Kendo官方文件</a>)：</p>
+<p>[code language=”javascript”]<br>error: function (e) {<br>    if (!$.isEmptyObject(e.errorThrown))<br>        ShowError(e.errorThrown); // Alert錯誤訊息<br>}<br>[/code]</p>
+<p>Controller設定如下：</p>
+<p>[code language=”csharp”]<br>[HttpPost]<br>public JsonResult GetGridData(ParameterModel model)<br>{<br>    try<br>    {<br>        var data = DataService.GetGridData(model);<br>        return Json(data);<br>    }<br>    catch (Exception e)<br>    {<br>        Response.StatusCode = 0;<br>        Response.StatusDescription = ex.Message;<br>        return null;<br>    }<br>}<br>[/code]</p>
+<p>比較值得說明的是在Line 11的部分為何給予了一個無定義的code 0，經過反覆的測試，發現Status Code為兩百多(2xx)時會被判定為成功，其餘狀況皆會進入error event中，</p>
+<p>(關於Status Code的內容，可參考<a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank" rel="external">Wiki</a>或是<a href="https://msdn.microsoft.com/zh-tw/library/system.net.httpstatuscode(v=vs.110" target="_blank" rel="external">MSDN</a>.aspx)中提供的列舉類型，更詳細的解釋可參考<a href="https://tools.ietf.org/html/rfc7231#section-6.1" target="_blank" rel="external">這裡</a>。)</p>
+<p>而若給予的Status Code是有被定義過的(如404代表Not Found)，在e.errorThrown便可以取得「Not Found」的訊息並且做顯示，但如果是無定義過的代碼(例如0)，便可以透過Line 12的設定給予自定義的錯誤訊息。</p>
+<p>其實0並不是個合法的Status Code(關於0的更多訊息，可參考<a href="http://stackoverflow.com/questions/3825581/does-an-http-status-code-of-0-have-any-meaning" target="_blank" rel="external">Stackoverflow</a>的回答)，</p>
+<p>但經測試只要不是2XX系列的Success代碼，都會進入到Error中，所以其實選用399或599這種沒被定義過的都可以有相同結果，只不過不同的code group有其不同意義，如4XX代表Client Error、5XX代表Server Error，因此選用0做為自定義的錯誤也避免與其他代碼混淆。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/04/c-net-mvc-e5-8f-96-e5-be-97kendogrid-datasource-e6-99-82-e7-9a-84error-handling/" data-id="cj5l58mhr0006tkv3uls51hzf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/KendoGrid/">KendoGrid</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/08/javascript-js-e7-9a-84local-variable/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [JavaScript] JS的Local Variable
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/13/sql-server-e9-98-b2-e6-ad-a2-e8-aa-a4-e4-b8-8bsql-e6-8c-87-e4-bb-a4-e6-89-80-e9-80-a0-e6-88-90-e7-9a-84-e6-af-80-e6-bb-85-e6-80-a7-e5-be-8c-e6-9e-9c/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[SQL Server] 防止誤下SQL指令所造成的毀滅性後果</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-NET-MVC/">C# .NET MVC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/好用工具分享/">好用工具分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分類/">未分類</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NET/">.NET</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KendoGrid/">KendoGrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XmlDocument/">XmlDocument</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XmlReader/">XmlReader</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/KendoGrid/" style="font-size: 10px;">KendoGrid</a> <a href="/tags/XmlDocument/" style="font-size: 10px;">XmlDocument</a> <a href="/tags/XmlReader/" style="font-size: 10px;">XmlReader</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/25/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/18/convert-big5-to-utf8/">Convert Big5 To UTF8</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/sonarlint-x-visual-studio-e5-8d-b3-e6-99-82-e7-9a-84-e7-a8-8b-e5-bc-8f-e7-a2-bc-e9-9d-9c-e6-85-8b-e6-8e-83-e6-8f-8f-e5-b7-a5-e5-85-b7/">SonarLint × Visual Studio -  即時的程式碼靜態掃描工具</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc/">[SQL Server]透過TABLOCKX語法以避免取號功能取到重複的值</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/30/sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c/">[SQL Server] Not In子查詢所返回的錯誤結果</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

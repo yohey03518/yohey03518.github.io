@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>[LeetCode] 2. Add Two Numbers | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="這次來做的是Algorithms的第二題，難度為Medium， 題目要求是傳入兩個代表某非負整數的linked list(node value為one digit的非負整數)， 回傳相加後的結果，型態和傳入的linked list一樣。 範例(取自LeetCode)： 假設執行342+465要計算出807這個值， 則 Input: (2 -&amp;gt; 4 -&amp;gt; 3) + (5 -&amp;gt; 6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[LeetCode] 2. Add Two Numbers">
+<meta property="og:url" content="http://yoursite.com/2017/06/22/leetcode-2-add-two-numbers/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="這次來做的是Algorithms的第二題，難度為Medium， 題目要求是傳入兩個代表某非負整數的linked list(node value為one digit的非負整數)， 回傳相加後的結果，型態和傳入的linked list一樣。 範例(取自LeetCode)： 假設執行342+465要計算出807這個值， 則 Input: (2 -&amp;gt; 4 -&amp;gt; 3) + (5 -&amp;gt; 6">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/testresult1.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/testresult2.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/testresult31.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/testresult41.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/testresult5.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/submitresult.png">
+<meta property="og:updated_time" content="2017-07-26T14:52:52.174Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[LeetCode] 2. Add Two Numbers">
+<meta name="twitter:description" content="這次來做的是Algorithms的第二題，難度為Medium， 題目要求是傳入兩個代表某非負整數的linked list(node value為one digit的非負整數)， 回傳相加後的結果，型態和傳入的linked list一樣。 範例(取自LeetCode)： 假設執行342+465要計算出807這個值， 則 Input: (2 -&amp;gt; 4 -&amp;gt; 3) + (5 -&amp;gt; 6">
+<meta name="twitter:image" content="https://yohey66.files.wordpress.com/2017/06/testresult1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-leetcode-2-add-two-numbers" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/22/leetcode-2-add-two-numbers/" class="article-date">
+  <time datetime="2017-06-22T15:36:50.000Z" itemprop="datePublished">2017-06-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [LeetCode] 2. Add Two Numbers
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>這次來做的是Algorithms的第二題，難度為Medium，</p>
+<p>題目要求是傳入兩個代表某非負整數的linked list(node value為one digit的非負整數)，</p>
+<p>回傳相加後的結果，型態和傳入的linked list一樣。</p>
+<p>範例(取自LeetCode)：</p>
+<p>假設執行342+465要計算出807這個值，</p>
+<p>則</p>
+<p><strong>Input:</strong> (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br><strong>Output:</strong> 7 -&gt; 0 -&gt; 8</p>
+<p>(<a href="https://leetcode.com/problems/add-two-numbers" target="_blank" rel="external">題目連結</a>)</p>
+<p>首先一樣依照TDD的模式，</p>
+<p>先寫好測試案例，</p>
+<p>附帶一提，題目中也有定義好要使用的linked list類別</p>
+<p><a href="https://gist.github.com/yohey03518/3f0754948de66e454699b6919873855d" target="_blank" rel="external">https://gist.github.com/yohey03518/3f0754948de66e454699b6919873855d</a></p>
+<p>測試初始化</p>
+<p><a href="https://gist.github.com/yohey03518/9ccd4e47c615bf7d592bbc6a11299f53" target="_blank" rel="external">https://gist.github.com/yohey03518/9ccd4e47c615bf7d592bbc6a11299f53</a></p>
+<p>第一個測試案例：單位數的相加，並且相加結果不超過10</p>
+<p><a href="https://gist.github.com/yohey03518/7759a430be66d09ef51e0f50c617343a" target="_blank" rel="external">https://gist.github.com/yohey03518/7759a430be66d09ef51e0f50c617343a</a></p>
+<p>&nbsp;</p>
+<p>接著實作method AddTwoNumbers滿足此需求</p>
+<p><a href="https://gist.github.com/yohey03518/3661ea1b2b14c800677b44861cd7d1a7" target="_blank" rel="external">https://gist.github.com/yohey03518/3661ea1b2b14c800677b44861cd7d1a7</a></p>
+<p>&nbsp;</p>
+<p>很好，測試通過了</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult1.png" alt="TestResult1"></p>
+<p>接著下一個測試案例：兩個單位數相加大小會超過十(雙位數)</p>
+<p><a href="https://gist.github.com/yohey03518/289627c3cdb4e854f49035d21a70c4e6" target="_blank" rel="external">https://gist.github.com/yohey03518/289627c3cdb4e854f49035d21a70c4e6</a></p>
+<p>想當然執行測試會失敗，趕緊來撰寫符合此兩規則的程式：</p>
+<p>判斷若結果超過十，則要分位數去處理並回傳含有兩個節點的結果</p>
+<p><a href="https://gist.github.com/yohey03518/49bc635dd57a5c58e2af3da51e276a8e" target="_blank" rel="external">https://gist.github.com/yohey03518/49bc635dd57a5c58e2af3da51e276a8e</a></p>
+<p>的確測試也通過了</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult2.png" alt="TestResult2"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>接著第三個測試案例，不同位數的相加但不涉及進位，</p>
+<p>被加數和加數顛倒來當作不同測試案例</p>
+<p><a href="https://gist.github.com/yohey03518/734bd7846ff3913f7d4187a7908d5a89" target="_blank" rel="external">https://gist.github.com/yohey03518/734bd7846ff3913f7d4187a7908d5a89</a></p>
+<p>這邊就要開始思考該用何種方式去爬所有的位數並做運算，</p>
+<p>想法是在做加法時都會個位數十位數對齊去進行，</p>
+<p>那就分別各用一個指標去走訪兩個input值，</p>
+<p>去做個位數相加、十位數相加…以此類推，</p>
+<p>這想法跟原先的寫法有些不同，因此要來重構一下</p>
+<p><a href="https://gist.github.com/yohey03518/473718e59c141a07bca4e355aebe0677" target="_blank" rel="external">https://gist.github.com/yohey03518/473718e59c141a07bca4e355aebe0677</a></p>
+<p>比較特別的是為了讓儲存加總結果的list可以順利讓指標走訪，</p>
+<p>必須先new一個起始點，因此最終的結果是從resultStartPoint的next開始回傳。</p>
+<p>&nbsp;</p>
+<p>好的那馬上來執行測試…</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult31.png" alt="TestResult3"></p>
+<p>Oops！最新的測試案例是通過了，</p>
+<p>但在我們的有涉及進位的第二項測試案例上卻是出錯的，</p>
+<p>不過也沒什麼好難過的，TDD的過程就是滿足當下的需求以及前項的測試案例，</p>
+<p>因此只要再調整一下讓它滿足其餘測試案例即可，</p>
+<p>意即要針對前項實作的Line23針對可能的進位做處理，</p>
+<p>程式中加上另一個變數來處理進位，</p>
+<p>實作修改如下</p>
+<p><a href="https://gist.github.com/yohey03518/df43945d34a69972c7795e05c44b6195" target="_blank" rel="external">https://gist.github.com/yohey03518/df43945d34a69972c7795e05c44b6195</a></p>
+<p>測試也順利都通過了</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult41.png" alt="TestResult4"></p>
+<p>接著下一個測試案例，多重進位，如3+99這種狀況會有兩次的進位</p>
+<p><a href="https://gist.github.com/yohey03518/f0ae3896c52e479694f29393129de840" target="_blank" rel="external">https://gist.github.com/yohey03518/f0ae3896c52e479694f29393129de840</a></p>
+<p>&nbsp;</p>
+<p>結果發現，運氣不錯！先前的案例似乎也包含著這樣的狀況，測試全通過</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult5.png" alt="TestResult5"></p>
+<p>嗯！總感覺是時候了，來Submit這一段code試試看吧！</p>
+<p>結果出乎意料地順利呢！</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/submitresult.png" alt="SubmitResult"></p>
+<p>打敗了88.67%的玩家，看來這數字某種程度上真的是個成就感呢！</p>
+<p>那.. 今晚就來睡個好覺啦！</p>
+<p>&nbsp;</p>
+<p>後記：</p>
+<p>其實這一題在做的時候已經很晚接近不得不睡的時間了(還是個上班族RRR)，</p>
+<p>因此完成兩個測試案例後就想說隔天再繼續好了，</p>
+<p>發現TDD的好處大概有一點也是在這，一個階段一個階段的進行，</p>
+<p>不用去管之後該怎辦，專注在眼前的需求即可。</p>
+<p>但身為一個頭腦簡單的攻城屍，睡前還是忍不住想快點知道submit結果(數字殺人阿~~)，</p>
+<p>於是就暫時跳過TDD的步驟直接開始試著寫符合全部案例的實作，</p>
+<p>於是就是不斷的trial and error，修改一次後就submit一次，</p>
+<p>來來回回不知道總共幾遍，讓心情越來越毛躁，</p>
+<p>這種感覺真的不是很好而且也睡不好！！！</p>
+<p>也因此隔天再回到TDD的流程中，發現一切是如此的簡單美好，</p>
+<p>看來也是個意外的收穫及經驗呀！</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/06/22/leetcode-2-add-two-numbers/" data-id="cj5l58mi3000ftkv39irgu39x" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/29/leetcode-3-longest-substring-without-repeating-characters/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [LeetCode] 3. Longest Substring Without Repeating Characters
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/20/leetcode-1-two-sum/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[LeetCode] 1. Two Sum</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-NET-MVC/">C# .NET MVC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/好用工具分享/">好用工具分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分類/">未分類</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NET/">.NET</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KendoGrid/">KendoGrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XmlDocument/">XmlDocument</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XmlReader/">XmlReader</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/KendoGrid/" style="font-size: 10px;">KendoGrid</a> <a href="/tags/XmlDocument/" style="font-size: 10px;">XmlDocument</a> <a href="/tags/XmlReader/" style="font-size: 10px;">XmlReader</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/25/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/18/convert-big5-to-utf8/">Convert Big5 To UTF8</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/sonarlint-x-visual-studio-e5-8d-b3-e6-99-82-e7-9a-84-e7-a8-8b-e5-bc-8f-e7-a2-bc-e9-9d-9c-e6-85-8b-e6-8e-83-e6-8f-8f-e5-b7-a5-e5-85-b7/">SonarLint × Visual Studio -  即時的程式碼靜態掃描工具</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc/">[SQL Server]透過TABLOCKX語法以避免取號功能取到重複的值</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/30/sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c/">[SQL Server] Not In子查詢所返回的錯誤結果</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

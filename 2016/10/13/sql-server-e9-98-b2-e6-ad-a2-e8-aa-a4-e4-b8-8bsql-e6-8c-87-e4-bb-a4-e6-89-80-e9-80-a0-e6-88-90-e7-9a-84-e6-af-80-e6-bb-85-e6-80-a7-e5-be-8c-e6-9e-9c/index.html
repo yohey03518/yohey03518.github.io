@@ -3,18 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | Hexo</title>
+  <title>[SQL Server] 防止誤下SQL指令所造成的毀滅性後果 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="前陣子要去刪除DB中某一筆代碼資料時，洋洋灑灑的下了DELETE FROM CODE_TABLE卻忘記加上WHERE條件，以至於造成了毀滅性的結果，  不過後來經過同事提醒，其實在下SQL時是可以很簡單的透過指令來做一層預防，網路上也早有許多說明，在這邊簡單做個紀錄如下： [code language=”sql”]BEGIN TRANDELETE FROM CODE_TABLEWHERE CODE">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2017/07/25/hello-world/index.html">
+<meta property="og:title" content="[SQL Server] 防止誤下SQL指令所造成的毀滅性後果">
+<meta property="og:url" content="http://yoursite.com/2016/10/13/sql-server-e9-98-b2-e6-ad-a2-e8-aa-a4-e4-b8-8bsql-e6-8c-87-e4-bb-a4-e6-89-80-e9-80-a0-e6-88-90-e7-9a-84-e6-af-80-e6-bb-85-e6-80-a7-e5-be-8c-e6-9e-9c/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:updated_time" content="2017-07-25T14:02:56.798Z">
+<meta property="og:description" content="前陣子要去刪除DB中某一筆代碼資料時，洋洋灑灑的下了DELETE FROM CODE_TABLE卻忘記加上WHERE條件，以至於造成了毀滅性的結果，  不過後來經過同事提醒，其實在下SQL時是可以很簡單的透過指令來做一層預防，網路上也早有許多說明，在這邊簡單做個紀錄如下： [code language=”sql”]BEGIN TRANDELETE FROM CODE_TABLEWHERE CODE">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2016/10/efff.png">
+<meta property="og:updated_time" content="2017-07-26T14:52:52.174Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="[SQL Server] 防止誤下SQL指令所造成的毀滅性後果">
+<meta name="twitter:description" content="前陣子要去刪除DB中某一筆代碼資料時，洋洋灑灑的下了DELETE FROM CODE_TABLE卻忘記加上WHERE條件，以至於造成了毀滅性的結果，  不過後來經過同事提醒，其實在下SQL時是可以很簡單的透過指令來做一層預防，網路上也早有許多說明，在這邊簡單做個紀錄如下： [code language=”sql”]BEGIN TRANDELETE FROM CODE_TABLEWHERE CODE">
+<meta name="twitter:image" content="https://yohey66.files.wordpress.com/2016/10/efff.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -63,12 +65,16 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-sql-server-e9-98-b2-e6-ad-a2-e8-aa-a4-e4-b8-8bsql-e6-8c-87-e4-bb-a4-e6-89-80-e9-80-a0-e6-88-90-e7-9a-84-e6-af-80-e6-bb-85-e6-80-a7-e5-be-8c-e6-9e-9c" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/07/25/hello-world/" class="article-date">
-  <time datetime="2017-07-25T14:02:56.795Z" itemprop="datePublished">2017-07-25</time>
+    <a href="/2016/10/13/sql-server-e9-98-b2-e6-ad-a2-e8-aa-a4-e4-b8-8bsql-e6-8c-87-e4-bb-a4-e6-89-80-e9-80-a0-e6-88-90-e7-9a-84-e6-af-80-e6-bb-85-e6-80-a7-e5-be-8c-e6-9e-9c/" class="article-date">
+  <time datetime="2016-10-13T09:43:29.000Z" itemprop="datePublished">2016-10-13</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -77,7 +83,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      [SQL Server] 防止誤下SQL指令所造成的毀滅性後果
     </h1>
   
 
@@ -85,20 +91,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>前陣子要去刪除DB中某一筆代碼資料時，洋洋灑灑的下了DELETE FROM CODE_TABLE卻忘記加上WHERE條件，以至於造成了毀滅性的結果，</p>
+<p><img src="https://yohey66.files.wordpress.com/2016/10/efff.png" alt="efff"></p>
+<p>不過後來經過同事提醒，其實在下SQL時是可以很簡單的透過指令來做一層預防，網路上也早有許多說明，在這邊簡單做個紀錄如下：</p>
+<p>[code language=”sql”]<br>BEGIN TRAN<br>DELETE FROM CODE_TABLE<br>WHERE CODE_ID = ‘AA’<br>[/code]</p>
+<p>透過執行BEGIN TRAN便可以將後續執行的指令包入transaction中，</p>
+<p>接著執行我們主要的SQL後，可以先確認刪除的筆數結果是否符合預期，</p>
+<p>若符合預期，就下COMMIT；若發現有問題，就執行ROLLBACK</p>
+<p>[code language=”sql”] COMMIT –確認無誤<br>ROLLBACK –有問題，趕緊下這道<br>[/code]</p>
+<p>透過簡單的指令，便可以預防毀滅性的結果囉。</p>
+<p>不過最重要的還是在處理這種底層的動作時要更加小心才是。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/25/hello-world/" data-id="cj5l58mhp0005tkv3zasjatnd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/13/sql-server-e9-98-b2-e6-ad-a2-e8-aa-a4-e4-b8-8bsql-e6-8c-87-e4-bb-a4-e6-89-80-e9-80-a0-e6-88-90-e7-9a-84-e6-af-80-e6-bb-85-e6-80-a7-e5-be-8c-e6-9e-9c/" data-id="cj5l58mie000stkv36lk0uh5h" class="article-share-link">Share</a>
       
       
     </footer>
@@ -107,10 +114,19 @@
     
 <nav id="article-nav">
   
+    <a href="/2016/11/04/c-net-mvc-e5-8f-96-e5-be-97kendogrid-datasource-e6-99-82-e7-9a-84error-handling/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [C# .NET MVC] 取得KendoGrid DataSource時的Error Handling
+        
+      </div>
+    </a>
   
-    <a href="/2017/07/18/convert-big5-to-utf8/" id="article-nav-older" class="article-nav-link-wrap">
+  
+    <a href="/2016/10/04/c-net-mvc-e8-a7-a3-e6-b1-baxmlreader-readelementcontentas-e6-96-b9-e6-b3-95-e6-9c-83-e8-b7-b3-e9-81-8e-e5-85-83-e7-b4-a0-e4-b9-8b-e6-9b-bf-e4-bb-a3-e6-96-b9-e6-a1-88/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Convert Big5 To UTF8</div>
+      <div class="article-nav-title">[.NET MVC] 解決XmlReader ReadElementContentAs* 方法會跳過元素之替代方案</div>
     </a>
   
 </nav>

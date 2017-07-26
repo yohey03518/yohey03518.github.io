@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>[SQL Server]透過TABLOCKX語法以避免取號功能取到重複的值 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="問題：針對同張資料表，不希望同時有兩個人進行存取(SELECT)，但即使包在交易控管(Transaction)以及SQL Server隔離等級(Isolation Level)設定為SERIALIZABLE之下，仍無法阻止此狀況發生。 &amp;nbsp; 故事背景： 專案自從上線後， 偶爾會發生取號取到重複的值， 而造成整個DB資料亂掉， 進而因為一些重要邏輯資料表的Primary Key索引約束限制，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[SQL Server]透過TABLOCKX語法以避免取號功能取到重複的值">
+<meta property="og:url" content="http://yoursite.com/2017/07/11/sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="問題：針對同張資料表，不希望同時有兩個人進行存取(SELECT)，但即使包在交易控管(Transaction)以及SQL Server隔離等級(Isolation Level)設定為SERIALIZABLE之下，仍無法阻止此狀況發生。 &amp;nbsp; 故事背景： 專案自從上線後， 偶爾會發生取號取到重複的值， 而造成整個DB資料亂掉， 進而因為一些重要邏輯資料表的Primary Key索引約束限制，">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/07/1.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/07/22.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/07/32.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/07/42.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/07/51.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/07/61.png">
+<meta property="og:updated_time" content="2017-07-26T14:52:52.175Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[SQL Server]透過TABLOCKX語法以避免取號功能取到重複的值">
+<meta name="twitter:description" content="問題：針對同張資料表，不希望同時有兩個人進行存取(SELECT)，但即使包在交易控管(Transaction)以及SQL Server隔離等級(Isolation Level)設定為SERIALIZABLE之下，仍無法阻止此狀況發生。 &amp;nbsp; 故事背景： 專案自從上線後， 偶爾會發生取號取到重複的值， 而造成整個DB資料亂掉， 進而因為一些重要邏輯資料表的Primary Key索引約束限制，">
+<meta name="twitter:image" content="https://yohey66.files.wordpress.com/2017/07/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/11/sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc/" class="article-date">
+  <time datetime="2017-07-11T02:14:34.000Z" itemprop="datePublished">2017-07-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [SQL Server]透過TABLOCKX語法以避免取號功能取到重複的值
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>問題：針對同張資料表，不希望同時有兩個人進行存取(SELECT)，但即使包在交易控管(Transaction)以及SQL Server隔離等級(Isolation Level)設定為SERIALIZABLE之下，仍無法阻止此狀況發生。</p>
+<p>&nbsp;</p>
+<p>故事背景：</p>
+<p>專案自從上線後，</p>
+<p>偶爾會發生取號取到重複的值，</p>
+<p>而造成整個DB資料亂掉，</p>
+<p>進而因為一些重要邏輯資料表的Primary Key索引約束限制，</p>
+<p>使得整個系統發生癱瘓的現象，實在是相當恐怖。</p>
+<p>&nbsp;</p>
+<p>問題探討：</p>
+<p>假設資料表A之某欄位(ex:表單編號)使用之編號是由資料表B所記錄，</p>
+<p>當有新案件要Insert時，</p>
+<p>取號的邏輯大致可以簡化如下：</p>
+<ol>
+<li>SELECT資料表B取得目前該編號使用到幾號(N)</li>
+<li>將N加一後UPDATE回資料表B</li>
+<li>程式使用N+1做為該案件編號<br>但經測試後，</li>
+</ol>
+<p>若同時有兩個使用者進行案件新增，</p>
+<p>幾乎同時間開始執行步驟1，</p>
+<p>則兩位使用者是的確有可能取到相同的值，</p>
+<p>因此即使有交易控管讓UPDATE的動作要排隊，</p>
+<p>也無法阻止程式使用重複的值接著往下進行。</p>
+<p>&nbsp;</p>
+<p>在此簡單的從SQL Server進行模擬：</p>
+<p>首先建立SEQ_TABLE紀錄取號值</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/1.png" alt="1"></p>
+<p>透過兩個視窗開啟連線並依序在Transaction內執行至SELECT的步驟</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/22.png" alt="2"></p>
+<p>會發現可以取到相同的值，</p>
+<p>接著將剛剛取到的SEQ填入並依序執行UPDATE，</p>
+<p>會發現右邊視窗必須等待左邊視窗COMMIT後才可UPDATE(未逾時)</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/32.png" alt="3"></p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/42.png" alt="4"></p>
+<p>但進行到此時，不論如何兩邊取到的值都是相同的(0)，</p>
+<p>因此UPDATE回去的也都是相同的值(1)，完全是不合理的。</p>
+<p>&nbsp;</p>
+<p>解決辦法：</p>
+<p>在執行SELECT動作的時候，</p>
+<p>加入WITH TABLOCKX的語法，</p>
+<p>使得這張TABLE在這個Transaction結束前會是獨佔式鎖定(Exclusive Lock)，</p>
+<p>其他交易的動作皆無法針對此張資料表產生Lock(包含Shared lock、Update lock及Exclusive lock等)，</p>
+<p>也就是交易結束前，</p>
+<p>其他人皆無法取得此張資料表內容(除了NOLOCK)，</p>
+<p>以確保每次SELECT的值都是最新的：</p>
+<p>針對剛剛的模擬，加上了WITH TABLOCKX的語法並執行至SELECT，</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/51.png" alt="5"></p>
+<p>會發現左邊視窗SELECT結果是1，右邊卻依然在苦苦等待，</p>
+<p>接著將左邊視窗的UPDATE及COMMIT做執行，</p>
+<p>會發現右邊的SELECT語法完成了，</p>
+<p>而查詢結果是左邊視窗UPDATE後的結果，</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/61.png" alt="6"></p>
+<p>&nbsp;</p>
+<p>結論：</p>
+<p>透過TABLOCKX語法，</p>
+<p>便可以手動去控制資料表的存取等級，</p>
+<p>以避免如上的錯誤狀況發生，</p>
+<p>但並不代表所有的Query都需要此語法，</p>
+<p>不必要的TABLOCKX反而會造成系統過多的等待而效能低落，</p>
+<p>仍需依照需求作使用。</p>
+<p>&nbsp;</p>
+<p>後記(2017/07/13補充)：</p>
+<p>後來跟同仁討論研究後，</p>
+<p>發現有個更簡單的解法，如下：</p>
+<ol>
+<li>先執行UPDATE將欄位加一 (UPDATE SEQ_TABLE SET SEQ = SEQ + 1)</li>
+<li>進行SELECT將值取出<br>也就是不論多少交易同時要進行取號，</li>
+</ol>
+<p>都必須乖乖的在UPDATE這個步驟排隊，</p>
+<p>而當換到自己執行時，</p>
+<p>是取出TABLE目前的值去加一再做SELECT，</p>
+<p>就不會發生覆蓋的情況了，</p>
+<p>不失為一個簡便的解決方案。</p>
+<p>&nbsp;</p>
+<p>補充及參考資料：</p>
+<p>關於獨佔式鎖定與其他鎖定的運作機制</p>
+<p><a href="http://jackyshih.pixnet.net/blog/post/6154337-sql-server-lock-架構讀後心得" target="_blank" rel="external">http://jackyshih.pixnet.net/blog/post/6154337-sql-server-lock-架構讀後心得</a></p>
+<p><a href="https://technet.microsoft.com/en-us/library/ms175519(v=sql.105" target="_blank" rel="external">https://technet.microsoft.com/en-us/library/ms175519(v=sql.105).aspx</a>.aspx)</p>
+<p>TABLE HINT及交易隔離等級(Transaction Isolation Level)</p>
+<p><a href="https://docs.microsoft.com/en-us/sql/t-sql/queries/hints-transact-sql-table" target="_blank" rel="external">https://docs.microsoft.com/en-us/sql/t-sql/queries/hints-transact-sql-table</a></p>
+<p><a href="https://msdn.microsoft.com/zh-tw/library/ms173763(v=sql.120" target="_blank" rel="external">https://msdn.microsoft.com/zh-tw/library/ms173763(v=sql.120).aspx</a>.aspx)</p>
+<p><a href="https://dotblogs.com.tw/regionbbs/2011/04/17/sql_server_isolation_level" target="_blank" rel="external">https://dotblogs.com.tw/regionbbs/2011/04/17/sql_server_isolation_level</a></p>
+<p>TABLOCK vs TABLOCKX</p>
+<p><a href="https://stackoverflow.com/questions/5102152/tablock-vs-tablockx" target="_blank" rel="external">https://stackoverflow.com/questions/5102152/tablock-vs-tablockx</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/11/sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc/" data-id="cj5l58mik000xtkv3ofxghl6h" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/11/sonarlint-x-visual-studio-e5-8d-b3-e6-99-82-e7-9a-84-e7-a8-8b-e5-bc-8f-e7-a2-bc-e9-9d-9c-e6-85-8b-e6-8e-83-e6-8f-8f-e5-b7-a5-e5-85-b7/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          SonarLint × Visual Studio -  即時的程式碼靜態掃描工具
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/30/sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[SQL Server] Not In子查詢所返回的錯誤結果</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-NET-MVC/">C# .NET MVC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/好用工具分享/">好用工具分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分類/">未分類</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NET/">.NET</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KendoGrid/">KendoGrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XmlDocument/">XmlDocument</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XmlReader/">XmlReader</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/KendoGrid/" style="font-size: 10px;">KendoGrid</a> <a href="/tags/XmlDocument/" style="font-size: 10px;">XmlDocument</a> <a href="/tags/XmlReader/" style="font-size: 10px;">XmlReader</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/25/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/18/convert-big5-to-utf8/">Convert Big5 To UTF8</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/sonarlint-x-visual-studio-e5-8d-b3-e6-99-82-e7-9a-84-e7-a8-8b-e5-bc-8f-e7-a2-bc-e9-9d-9c-e6-85-8b-e6-8e-83-e6-8f-8f-e5-b7-a5-e5-85-b7/">SonarLint × Visual Studio -  即時的程式碼靜態掃描工具</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc/">[SQL Server]透過TABLOCKX語法以避免取號功能取到重複的值</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/30/sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c/">[SQL Server] Not In子查詢所返回的錯誤結果</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

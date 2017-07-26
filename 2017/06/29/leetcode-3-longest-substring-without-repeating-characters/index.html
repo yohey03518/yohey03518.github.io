@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>[LeetCode] 3. Longest Substring Without Repeating Characters | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="今天來做的是Algorithms的第三題，難度為Medium。 題目要求是傳入一個字串，要回傳最大長度的不重複字元的子字串(Substring)的長度， (題目連結) 官方範例：  Examples: Given &amp;quot;abcabcbb&amp;quot;, the answer is &amp;quot;abc&amp;quot;, which the length is 3. Given &amp;quot;bbbbb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[LeetCode] 3. Longest Substring Without Repeating Characters">
+<meta property="og:url" content="http://yoursite.com/2017/06/29/leetcode-3-longest-substring-without-repeating-characters/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="今天來做的是Algorithms的第三題，難度為Medium。 題目要求是傳入一個字串，要回傳最大長度的不重複字元的子字串(Substring)的長度， (題目連結) 官方範例：  Examples: Given &amp;quot;abcabcbb&amp;quot;, the answer is &amp;quot;abc&amp;quot;, which the length is 3. Given &amp;quot;bbbbb">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/testresult11.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/testresult21.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/testresult32.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/testresult42.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/testresult51.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/testresult6.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/submiterror1.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/testresult7.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/submiterror2.png">
+<meta property="og:image" content="https://yohey66.files.wordpress.com/2017/06/submitresult1.png">
+<meta property="og:updated_time" content="2017-07-26T14:52:52.174Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[LeetCode] 3. Longest Substring Without Repeating Characters">
+<meta name="twitter:description" content="今天來做的是Algorithms的第三題，難度為Medium。 題目要求是傳入一個字串，要回傳最大長度的不重複字元的子字串(Substring)的長度， (題目連結) 官方範例：  Examples: Given &amp;quot;abcabcbb&amp;quot;, the answer is &amp;quot;abc&amp;quot;, which the length is 3. Given &amp;quot;bbbbb">
+<meta name="twitter:image" content="https://yohey66.files.wordpress.com/2017/06/testresult11.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-leetcode-3-longest-substring-without-repeating-characters" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/29/leetcode-3-longest-substring-without-repeating-characters/" class="article-date">
+  <time datetime="2017-06-29T14:52:21.000Z" itemprop="datePublished">2017-06-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [LeetCode] 3. Longest Substring Without Repeating Characters
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天來做的是Algorithms的第三題，難度為Medium。</p>
+<p>題目要求是傳入一個字串，要回傳最大長度的不重複字元的子字串(Substring)的長度，</p>
+<p>(<a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/#/description" target="_blank" rel="external">題目連結</a>)</p>
+<p>官方範例：</p>
+<blockquote>
+<p><strong>Examples:</strong></p>
+<p>Given <code>&quot;abcabcbb&quot;</code>, the answer is <code>&quot;abc&quot;</code>, which the length is 3.</p>
+<p>Given <code>&quot;bbbbb&quot;</code>, the answer is <code>&quot;b&quot;</code>, with the length of 1.</p>
+<p>Given <code>&quot;pwwkew&quot;</code>, the answer is <code>&quot;wke&quot;</code>, with the length of 3. Note that the answer must be a <strong>substring</strong>, <code>&quot;pwke&quot;</code> is a <em>subsequence</em> and not a substring.<br>好的，了解題目後那就開始吧！</p>
+</blockquote>
+<p>首先是測試的初始化以及第一個測試案例：傳入單一字元，回傳長度１</p>
+<p><a href="https://gist.github.com/yohey03518/0c7461a26d088eee5ef8a5682491e416" target="_blank" rel="external">https://gist.github.com/yohey03518/0c7461a26d088eee5ef8a5682491e416</a></p>
+<p>&nbsp;</p>
+<p>執行測試，但因還沒實作，所以當然會是失敗：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult11.png" alt="TestResult1"></p>
+<p>針對測試的需求，完成剛好可滿足測試案例的程式，並執行測試：</p>
+<p><a href="https://gist.github.com/yohey03518/9459dfbb6a9f82b51bed3f38fb1e895a" target="_blank" rel="external">https://gist.github.com/yohey03518/9459dfbb6a9f82b51bed3f38fb1e895a</a></p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult21.png" alt="TestResult2"></p>
+<p>寫到這邊，總覺得遵循TDD的開發方式來進行，</p>
+<p>這一步似乎有點太小步了，不過在上一題(<a href="https://yohey66.wordpress.com/2017/06/22/leetcode-2-add-two-numbers/" target="_blank" rel="external">AddTwoNumber</a>)中，</p>
+<p>曾經試著想要加快腳步跳著進行，</p>
+<p>卻踏上了自己不喜歡的節奏－－不斷的trial and error，</p>
+<p>所以今天還是乖乖的一步一步來吧！</p>
+<p>&nbsp;</p>
+<p>接著第二個測試案例，開始出現重複的字元，</p>
+<p>傳入”aa”字串，回傳長度為1：</p>
+<p><a href="https://gist.github.com/yohey03518/47e51eddd1561b81ef881a2ca495824c" target="_blank" rel="external">https://gist.github.com/yohey03518/47e51eddd1561b81ef881a2ca495824c</a></p>
+<p>不意外的，測試失敗囉，不過這都在預期之中</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult32.png" alt="TestResult3"></p>
+<p>趕緊來讓測試通過：</p>
+<p><a href="https://gist.github.com/yohey03518/f09a6a4f9826268ad29cc10a548bb500" target="_blank" rel="external">https://gist.github.com/yohey03518/f09a6a4f9826268ad29cc10a548bb500</a></p>
+<p>針對所有字元都相等的狀況直接回傳１，便可使測試通過</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult42.png" alt="TestResult4"></p>
+<p>當然這樣的程式碼是不可能符合全部需求的，趕緊來定義下一個測試案例：</p>
+<p>傳入”aab”回傳長度2</p>
+<p><a href="https://gist.github.com/yohey03518/f0818584201d19a0efee346b03ff96b5" target="_blank" rel="external">https://gist.github.com/yohey03518/f0818584201d19a0efee346b03ff96b5</a></p>
+<p>測試失敗，接著實作：</p>
+<p><a href="https://gist.github.com/yohey03518/f65fdfc17c5d3cccda6d2c1d52ff2732" target="_blank" rel="external">https://gist.github.com/yohey03518/f65fdfc17c5d3cccda6d2c1d52ff2732</a></p>
+<p>簡單介紹一下想法，</p>
+<p>走訪字串中的每一個字元，並且透過一個list儲存走訪過程中字元不重複的字串，</p>
+<p>若遇到重複的字元，則計算長度是否大於現在的最大值，</p>
+<p>若是則改變其值，最後進行回傳。</p>
+<p>&nbsp;</p>
+<p>好的，那測試也順利通過了</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult51.png" alt="TestResult5"></p>
+<p><span style="line-height:inherit;">(這樣寫完後總覺得好像不夠周詳，也許是自信心不夠吧 XD)</span></p>
+<p>在思考下一個測試案例時，總感覺剛剛實作的想法好像已經可以是個solution，</p>
+<p>或許是自行設計的測試案例很到位，又或是這一步跨得太大，</p>
+<p>我想… 經驗多了慢慢就會有感覺的吧！</p>
+<p>那先來將官網上的example三個測試案例放上去並執行測試：</p>
+<p>嗯！蠻順利的，都通過了</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult6.png" alt="TestResult6"></p>
+<p>&nbsp;</p>
+<p>現在的結果，功能面似乎已經達成(至少滿足設計的測試案例)，</p>
+<p>那就來提交看看吧！</p>
+<p>結果..</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/submiterror1.png" alt="SubmitError1"></p>
+<p>原來先前的想法是完全錯的，</p>
+<p>忽略了子字串起算點有可能是先前使用過的字元，</p>
+<p>再回去檢視官方的測試案例，例如”abcabcbb”回傳3，完全是運氣好啊(淚)，</p>
+<p>不過也不用難過，趕緊補上測試案例並讓它通過吧！</p>
+<p><a href="https://gist.github.com/yohey03518/5df8b3eac9638e257f4365d274b809c6" target="_blank" rel="external">https://gist.github.com/yohey03518/5df8b3eac9638e257f4365d274b809c6</a></p>
+<p>把原先的程式做一些調整，讓所有的字元都可以當成一個新的起始點(萬惡的兩層for又出現啦~)</p>
+<p><a href="https://gist.github.com/yohey03518/bd50cd2e8d9a5b4486d28dae524fad0f" target="_blank" rel="external">https://gist.github.com/yohey03518/bd50cd2e8d9a5b4486d28dae524fad0f</a></p>
+<p>&nbsp;</p>
+<p>很順利的，剛剛卡住的測試案例也通過了</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult7.png" alt="TestResult7"></p>
+<p>接著就Submit…</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/submiterror2.png" alt="SubmitError2"></p>
+<p>好的！是熟悉的Time Limit Exceeded呢！</p>
+<p>不過算是個可以提前預見的結果，在這樣的節奏下，</p>
+<p>了解自己的需求從「達成題目需求」至「效能調校」的過程，</p>
+<p>讓自己可以一次只專注一件事情，再透過測試案例的保護，</p>
+<p>來重構程式碼做效能調校，感覺是蠻踏實的！</p>
+<p>廢話說那麼多，還是趕緊來重構吧</p>
+<p>&nbsp;</p>
+<p>在前面測試案例及最後執行的過程中，</p>
+<p>目前可以得知只要滿足現有的這些測試案例，</p>
+<p>就可以達成需求，因此在這樣的測試保護下，</p>
+<p>我們可以很安心的進行重構，</p>
+<p>重構的目標只有一個，就是滿足測試案例(然後效能要快一點)</p>
+<p>&nbsp;</p>
+<p>以下是思考許久後的撰寫的結果：</p>
+<p><a href="https://gist.github.com/yohey03518/1b85b1f466d3150d1a39be213e130fa9" target="_blank" rel="external">https://gist.github.com/yohey03518/1b85b1f466d3150d1a39be213e130fa9</a></p>
+<p>想法是走訪字元的過程中，去記錄目前正在try最長長度的各字元所在陣列的索引值，</p>
+<p>當遇到重複的值時，除計算目前長度大小外，</p>
+<p>便從重複字元的下一個字元開始重新走訪，</p>
+<p>例如abcecp，當從a開始走訪走到第二個c時，</p>
+<p>除記錄目前長度外(目前為4)，便會從第一個c的下一個字元(e)重啟走訪。</p>
+<p>&nbsp;</p>
+<p>好的那解釋完畢，測試也通過了，趕緊信心滿滿的submit看看</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/submitresult1.png" alt="SubmitResult1"></p>
+<p>通過啦！！放煙火！！</p>
+<p>但是執行時間似乎還是差強人意阿～</p>
+<p>不過在這樣的流程下，總算是達成要求了，</p>
+<p>仍然值得給自己些鼓勵的唷！</p>
+<p>之後進行重構挑戰更好的執行時間會再補上和各位分享的！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/06/29/leetcode-3-longest-substring-without-repeating-characters/" data-id="cj5l58mi6000jtkv3uohd94sx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/30/sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [SQL Server] Not In子查詢所返回的錯誤結果
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/22/leetcode-2-add-two-numbers/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[LeetCode] 2. Add Two Numbers</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-NET-MVC/">C# .NET MVC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/好用工具分享/">好用工具分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分類/">未分類</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NET/">.NET</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KendoGrid/">KendoGrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XmlDocument/">XmlDocument</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XmlReader/">XmlReader</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/KendoGrid/" style="font-size: 10px;">KendoGrid</a> <a href="/tags/XmlDocument/" style="font-size: 10px;">XmlDocument</a> <a href="/tags/XmlReader/" style="font-size: 10px;">XmlReader</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/25/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/18/convert-big5-to-utf8/">Convert Big5 To UTF8</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/sonarlint-x-visual-studio-e5-8d-b3-e6-99-82-e7-9a-84-e7-a8-8b-e5-bc-8f-e7-a2-bc-e9-9d-9c-e6-85-8b-e6-8e-83-e6-8f-8f-e5-b7-a5-e5-85-b7/">SonarLint × Visual Studio -  即時的程式碼靜態掃描工具</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc/">[SQL Server]透過TABLOCKX語法以避免取號功能取到重複的值</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/30/sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c/">[SQL Server] Not In子查詢所返回的錯誤結果</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

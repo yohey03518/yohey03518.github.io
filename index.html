@@ -50,7 +50,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -96,7 +96,935 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/25/hello-world/" data-id="cj5jnw0yc0000acv3ju7atdkz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/25/hello-world/" data-id="cj5l58mhp0005tkv3zasjatnd" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-convert-big5-to-utf8" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/18/convert-big5-to-utf8/" class="article-date">
+  <time datetime="2017-07-18T04:01:33.000Z" itemprop="datePublished">2017-07-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/18/convert-big5-to-utf8/">Convert Big5 To UTF8</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前陣子專案在放上SonarQube掃描時，</p>
+<p>發生了部分檔案無法掃描的情況，</p>
+<p>追查後發現是專案中部份檔案的編碼(ANSI，中文為Big5)和設定(UTF8)不符，</p>
+<p>因而有了此需求。</p>
+<p>要將檔案轉換成UTF8編碼，</p>
+<p>可以很簡單的使用Notepad++的轉碼功能做轉換：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/notepadpp.png" alt="notepadpp"></p>
+<p>但是因為專案相當龐大，</p>
+<p>不太可能一一去做轉換，</p>
+<p>勢必要透過一些工具去處理，</p>
+<p>網路上這類的轉碼工具的確是有許多，</p>
+<p>但分析了一下自身的需求：</p>
+<ol>
+<li>找出某路徑底下所有.cs的檔案</li>
+<li>檢查該檔案是否為Big5編碼</li>
+<li>若是則做轉換<br>簡單的轉碼工具似乎是無法很直接的滿足需求，</li>
+</ol>
+<p>那就來試著寫一個吧！</p>
+<p>&nbsp;</p>
+<p>首先因只有部分檔案有編碼問題，</p>
+<p>故不希望有將UTF8的檔案進行讀出後再存成UTF8的動作，</p>
+<p>所以需要有個方法判斷某檔案是否為Big5編碼，</p>
+<p>這邊參考黑大的文章(<a href="http://blog.darkthread.net/post-2012-04-11-detect-big5-encoding.aspx" target="_blank" rel="external">CODE-偵測檔案是否為BIG5編碼</a>)並做點修改及說明，</p>
+<p>而有了以下判斷方法：</p>
+<p><a href="https://gist.github.com/yohey03518/ad99d05864993b22e4cb8bad7a39f058" target="_blank" rel="external">https://gist.github.com/yohey03518/ad99d05864993b22e4cb8bad7a39f058</a></p>
+<p>接下來就是掃出某路徑底下的檔案後判斷編碼並做轉換：</p>
+<p><a href="https://gist.github.com/yohey03518/3fd984a6cfe0c92c7482cbb4584e94dd" target="_blank" rel="external">https://gist.github.com/yohey03518/3fd984a6cfe0c92c7482cbb4584e94dd</a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>都準備完成了，來進行實驗：</p>
+<p>將剛剛的主程式複製一份並透過Notepad++轉換成Big5(原先為UTF8編碼)</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/e6ba96e58299e6aa94e6a188.png" alt="準備檔案"></p>
+<p>把App.config的路徑調整好後，執行程式結果如下：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/result.png" alt="Result"></p>
+<p>&nbsp;</p>
+<p>至於如何驗證成功轉成UTF8編碼，</p>
+<p>這邊是簡單的使用Windows的記事本，</p>
+<p>打開檔案後選擇另存新檔，</p>
+<p>若編碼預設是ＵTF-8的話代表檔案原先已經是UTF-8編碼囉！</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/auth.png" alt="Auth"></p>
+<p>&nbsp;</p>
+<p>補充：</p>
+<p>使用Cygwin、PowerShell或是Linux下的Terminal進行編碼轉換</p>
+<p><a href="https://superuser.com/questions/27060/batch-convert-files-for-encoding" target="_blank" rel="external">https://superuser.com/questions/27060/batch-convert-files-for-encoding</a></p>
+<p>&nbsp;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/18/convert-big5-to-utf8/" data-id="cj5l58mhl0004tkv3e7wf650t" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-sonarlint-x-visual-studio-e5-8d-b3-e6-99-82-e7-9a-84-e7-a8-8b-e5-bc-8f-e7-a2-bc-e9-9d-9c-e6-85-8b-e6-8e-83-e6-8f-8f-e5-b7-a5-e5-85-b7" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/11/sonarlint-x-visual-studio-e5-8d-b3-e6-99-82-e7-9a-84-e7-a8-8b-e5-bc-8f-e7-a2-bc-e9-9d-9c-e6-85-8b-e6-8e-83-e6-8f-8f-e5-b7-a5-e5-85-b7/" class="article-date">
+  <time datetime="2017-07-11T15:19:44.000Z" itemprop="datePublished">2017-07-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/好用工具分享/">好用工具分享</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/11/sonarlint-x-visual-studio-e5-8d-b3-e6-99-82-e7-9a-84-e7-a8-8b-e5-bc-8f-e7-a2-bc-e9-9d-9c-e6-85-8b-e6-8e-83-e6-8f-8f-e5-b7-a5-e5-85-b7/">SonarLint × Visual Studio -  即時的程式碼靜態掃描工具</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>公司有導入<a href="https://www.sonarqube.org/" target="_blank" rel="external">SonarQube</a>做為程式碼靜態掃描的工具，</p>
+<p>但總是有點覺得程式碼commit後還要等掃描後才能知道是否有Issue存在是有點慢的，</p>
+<p>而在一次教育訓練課程中得知了SonarLint這個IDE上的擴充功能，</p>
+<p>使用後才發現相當之方便！</p>
+<p><a href="http://www.sonarlint.org/index.html" target="_blank" rel="external">SonarLint官方網站</a></p>
+<p>目前支援Eclipse、IntelliJ IDEA、Visual Studio及Visual Studio Code等開發工具，</p>
+<p>這邊簡單以VS做介紹。</p>
+<p>截至目前SonarLint支援VS的2015及2017版本，</p>
+<p>安裝方式相當簡單，</p>
+<p>只要透過VS的擴充功能即可進行安裝：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/11.png" alt="1"></p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/23.png" alt="2"></p>
+<p>下載安裝後重啟VS即可使用囉！</p>
+<p>目前SonarLint在VS上支援除支援C#及VB.NET外，3.0版本之後也可支援JavaScript，</p>
+<p>重啟VS後便會出現提示是否安裝此功能</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/33.png" alt="3"></p>
+<p>&nbsp;</p>
+<p>接著簡單開個專案做測試，並試著打些無用的註解，</p>
+<p>會發現出現了新的東西，</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/43.png" alt="4"></p>
+<p>原先SonarQube會出現的Issue現在在coding時便會即時的出現提示，</p>
+<p>綠色的毛毛蟲讓人感覺不把它修正過來就會不舒服呢！</p>
+<p>&nbsp;</p>
+<p>啟用或是關閉SonarLint的即時提醒，以及啟用或關閉某些rules：</p>
+<p>點選專案參考中的規則集合</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/52.png" alt="5"></p>
+<p>將SonarAnalyzer的勾勾取消，便可以停用SonarLint分析，</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/63.png" alt="6"></p>
+<p>若是將SonarAnalyzer展開，則可以勾選或是取消規則，</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/7.png" alt="7"></p>
+<p>比較值得注意的是，這些規則原先預設是吃IDE環境上的規則，</p>
+<p>使得若有做調整，專案就會產生一個ruleset檔案紀錄調整的規則</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/8.png" alt="8"></p>
+<p>&nbsp;</p>
+<p>當然SonarLint也可以和SonarQube做連結，</p>
+<p>詳細的做法請參考<a href="http://www.sonarlint.org/visualstudio/index.html#Connected" target="_blank" rel="external">Connected Mode</a>，</p>
+<p>若是公司或團隊有使用SonarQube，</p>
+<p>個人認為做連結的好處在於規則的統一，</p>
+<p>團隊中有共識排除/啟用的規則便可以統一的從SonarQube Server做設定，</p>
+<p>但壞處是若方案包含多個專案，</p>
+<p>則每個專案都會有ruleset檔案存在，</p>
+<p>端看團隊對於靜態掃描的要求程度為何，</p>
+<p>如果是單純個人開發品質要求而不想多增加專案的檔案數量，</p>
+<p>個人認為使用SonarLint預設的設定也是相當足夠的！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/11/sonarlint-x-visual-studio-e5-8d-b3-e6-99-82-e7-9a-84-e7-a8-8b-e5-bc-8f-e7-a2-bc-e9-9d-9c-e6-85-8b-e6-8e-83-e6-8f-8f-e5-b7-a5-e5-85-b7/" data-id="cj5l58mib000ptkv3xrk1znuq" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/11/sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc/" class="article-date">
+  <time datetime="2017-07-11T02:14:34.000Z" itemprop="datePublished">2017-07-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/11/sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc/">[SQL Server]透過TABLOCKX語法以避免取號功能取到重複的值</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>問題：針對同張資料表，不希望同時有兩個人進行存取(SELECT)，但即使包在交易控管(Transaction)以及SQL Server隔離等級(Isolation Level)設定為SERIALIZABLE之下，仍無法阻止此狀況發生。</p>
+<p>&nbsp;</p>
+<p>故事背景：</p>
+<p>專案自從上線後，</p>
+<p>偶爾會發生取號取到重複的值，</p>
+<p>而造成整個DB資料亂掉，</p>
+<p>進而因為一些重要邏輯資料表的Primary Key索引約束限制，</p>
+<p>使得整個系統發生癱瘓的現象，實在是相當恐怖。</p>
+<p>&nbsp;</p>
+<p>問題探討：</p>
+<p>假設資料表A之某欄位(ex:表單編號)使用之編號是由資料表B所記錄，</p>
+<p>當有新案件要Insert時，</p>
+<p>取號的邏輯大致可以簡化如下：</p>
+<ol>
+<li>SELECT資料表B取得目前該編號使用到幾號(N)</li>
+<li>將N加一後UPDATE回資料表B</li>
+<li>程式使用N+1做為該案件編號<br>但經測試後，</li>
+</ol>
+<p>若同時有兩個使用者進行案件新增，</p>
+<p>幾乎同時間開始執行步驟1，</p>
+<p>則兩位使用者是的確有可能取到相同的值，</p>
+<p>因此即使有交易控管讓UPDATE的動作要排隊，</p>
+<p>也無法阻止程式使用重複的值接著往下進行。</p>
+<p>&nbsp;</p>
+<p>在此簡單的從SQL Server進行模擬：</p>
+<p>首先建立SEQ_TABLE紀錄取號值</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/1.png" alt="1"></p>
+<p>透過兩個視窗開啟連線並依序在Transaction內執行至SELECT的步驟</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/22.png" alt="2"></p>
+<p>會發現可以取到相同的值，</p>
+<p>接著將剛剛取到的SEQ填入並依序執行UPDATE，</p>
+<p>會發現右邊視窗必須等待左邊視窗COMMIT後才可UPDATE(未逾時)</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/32.png" alt="3"></p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/42.png" alt="4"></p>
+<p>但進行到此時，不論如何兩邊取到的值都是相同的(0)，</p>
+<p>因此UPDATE回去的也都是相同的值(1)，完全是不合理的。</p>
+<p>&nbsp;</p>
+<p>解決辦法：</p>
+<p>在執行SELECT動作的時候，</p>
+<p>加入WITH TABLOCKX的語法，</p>
+<p>使得這張TABLE在這個Transaction結束前會是獨佔式鎖定(Exclusive Lock)，</p>
+<p>其他交易的動作皆無法針對此張資料表產生Lock(包含Shared lock、Update lock及Exclusive lock等)，</p>
+<p>也就是交易結束前，</p>
+<p>其他人皆無法取得此張資料表內容(除了NOLOCK)，</p>
+<p>以確保每次SELECT的值都是最新的：</p>
+<p>針對剛剛的模擬，加上了WITH TABLOCKX的語法並執行至SELECT，</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/51.png" alt="5"></p>
+<p>會發現左邊視窗SELECT結果是1，右邊卻依然在苦苦等待，</p>
+<p>接著將左邊視窗的UPDATE及COMMIT做執行，</p>
+<p>會發現右邊的SELECT語法完成了，</p>
+<p>而查詢結果是左邊視窗UPDATE後的結果，</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/07/61.png" alt="6"></p>
+<p>&nbsp;</p>
+<p>結論：</p>
+<p>透過TABLOCKX語法，</p>
+<p>便可以手動去控制資料表的存取等級，</p>
+<p>以避免如上的錯誤狀況發生，</p>
+<p>但並不代表所有的Query都需要此語法，</p>
+<p>不必要的TABLOCKX反而會造成系統過多的等待而效能低落，</p>
+<p>仍需依照需求作使用。</p>
+<p>&nbsp;</p>
+<p>後記(2017/07/13補充)：</p>
+<p>後來跟同仁討論研究後，</p>
+<p>發現有個更簡單的解法，如下：</p>
+<ol>
+<li>先執行UPDATE將欄位加一 (UPDATE SEQ_TABLE SET SEQ = SEQ + 1)</li>
+<li>進行SELECT將值取出<br>也就是不論多少交易同時要進行取號，</li>
+</ol>
+<p>都必須乖乖的在UPDATE這個步驟排隊，</p>
+<p>而當換到自己執行時，</p>
+<p>是取出TABLE目前的值去加一再做SELECT，</p>
+<p>就不會發生覆蓋的情況了，</p>
+<p>不失為一個簡便的解決方案。</p>
+<p>&nbsp;</p>
+<p>補充及參考資料：</p>
+<p>關於獨佔式鎖定與其他鎖定的運作機制</p>
+<p><a href="http://jackyshih.pixnet.net/blog/post/6154337-sql-server-lock-架構讀後心得" target="_blank" rel="external">http://jackyshih.pixnet.net/blog/post/6154337-sql-server-lock-架構讀後心得</a></p>
+<p><a href="https://technet.microsoft.com/en-us/library/ms175519(v=sql.105" target="_blank" rel="external">https://technet.microsoft.com/en-us/library/ms175519(v=sql.105).aspx</a>.aspx)</p>
+<p>TABLE HINT及交易隔離等級(Transaction Isolation Level)</p>
+<p><a href="https://docs.microsoft.com/en-us/sql/t-sql/queries/hints-transact-sql-table" target="_blank" rel="external">https://docs.microsoft.com/en-us/sql/t-sql/queries/hints-transact-sql-table</a></p>
+<p><a href="https://msdn.microsoft.com/zh-tw/library/ms173763(v=sql.120" target="_blank" rel="external">https://msdn.microsoft.com/zh-tw/library/ms173763(v=sql.120).aspx</a>.aspx)</p>
+<p><a href="https://dotblogs.com.tw/regionbbs/2011/04/17/sql_server_isolation_level" target="_blank" rel="external">https://dotblogs.com.tw/regionbbs/2011/04/17/sql_server_isolation_level</a></p>
+<p>TABLOCK vs TABLOCKX</p>
+<p><a href="https://stackoverflow.com/questions/5102152/tablock-vs-tablockx" target="_blank" rel="external">https://stackoverflow.com/questions/5102152/tablock-vs-tablockx</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/11/sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc/" data-id="cj5l58mik000xtkv3ofxghl6h" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/30/sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c/" class="article-date">
+  <time datetime="2017-06-29T16:33:39.000Z" itemprop="datePublished">2017-06-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/30/sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c/">[SQL Server] Not In子查詢所返回的錯誤結果</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>SQL Server中使用了Not In 子查詢時，若包含null值，則會使查詢結果不如預期。</p>
+<p>舉例如下：</p>
+<p>首先建立一個主要的Table (MainTable)並給予值a.g.h</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/createmain.png" alt="CreateMain"></p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/maintable.png" alt="MainTable"></p>
+<p>接著建立一個Temp Table並塞入a.b.c.d.e及null值</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/temptabl.png" alt="Temptabl"></p>
+<p>接著透過Not In來濾掉MainTable中不存在Temp的值，</p>
+<p>預期應該是可以得到g.h的結果，</p>
+<p>但執行後卻發現得到的結果是空的，與預期結果不符</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/result1.png" alt="Result1"></p>
+<p>發生上述狀況，推斷是Not In出了些問題。</p>
+<p>經過了解，Not In在此例子中，使用時可以等價轉換成以下SQL</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/e7ad89e583b9e8bd89e68f9b.png" alt="等價轉換"></p>
+<p>問題就出在Line43－－與NULL值做比對</p>
+<blockquote>
+<p>當 SET ANSI_NULLS 是 ON 時，比較一個或多個 Null 運算式不會產生 TRUE 或 FALSE 的結果，而會產生 UNKNOWN。這是因為未知的值無法與任何值進行邏輯比較。如果運算式與常值 NULL 比較，或是兩個運算式互相比較但其中有一個是 NULL 值，就會發生此狀況。(<a href="https://technet.microsoft.com/zh-tw/library/ms191270(v=sql.105" target="_blank" rel="external">Technet</a>.aspx))<br>在沒特別設置的情況下，ANSI_NULLS 皆是預設為ON，</p>
+</blockquote>
+<p>因此透過以上敘述，與NULL值的比對皆會回傳UNKNOWN，</p>
+<p>而UNKNOWN在boolean的比對中意義則是false，</p>
+<p>故才會有如上的結果。</p>
+<p>總之在正常情況下，NULL與任何值比對的結果皆會是false，舉例如下：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/exam.png" alt="exam"></p>
+<p>解決辦法： 使用Not Exists語法</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/notexists.png" alt="notexists"></p>
+<p>透過Not Exists的寫法，針對NULL的比對只會在單一結果中回傳false，</p>
+<p>而不會如Not In般影響全部的結果。</p>
+<p>因此在使用上盡可能避免使用Not In語法，</p>
+<p>除結果的不準確性外，尚有其效能問題，這部分有機會再來談談。</p>
+<p>&nbsp;</p>
+<p>補充：ANSI_NULLS設定 (<a href="https://docs.microsoft.com/en-us/sql/t-sql/statements/set-ansi-nulls-transact-sql" target="_blank" rel="external">Microsoft Docs</a>)</p>
+<p>為了使NULL比對遵循ISO標準，故有此項設定，也預設為ON，</p>
+<p>使得使用「=」或「&lt;&gt;」比對NULL值時必定回傳false之結果，</p>
+<p>因此若設定為OFF，則可以正常使用：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/ansitest1.png" alt="ansitest"></p>
+<p>&nbsp;</p>
+<p>要注意的是，若更動此設定值，僅會對單一connection有效，</p>
+<p>(全域更動：ALTER DATABASE [DB_NAME] SET ANSI_NULLS OFF WITH NO_WAIT)</p>
+<p>然而官方文件也提醒在未來的SQL Server版本中，</p>
+<p>將不再支援更改此設定值了，</p>
+<p>也因此大家還是乖乖的遵循ISO標準來思考如何撰寫SQL吧！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/06/30/sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c/" data-id="cj5l58min000ztkv3waev1qbh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-leetcode-3-longest-substring-without-repeating-characters" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/29/leetcode-3-longest-substring-without-repeating-characters/" class="article-date">
+  <time datetime="2017-06-29T14:52:21.000Z" itemprop="datePublished">2017-06-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/29/leetcode-3-longest-substring-without-repeating-characters/">[LeetCode] 3. Longest Substring Without Repeating Characters</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天來做的是Algorithms的第三題，難度為Medium。</p>
+<p>題目要求是傳入一個字串，要回傳最大長度的不重複字元的子字串(Substring)的長度，</p>
+<p>(<a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/#/description" target="_blank" rel="external">題目連結</a>)</p>
+<p>官方範例：</p>
+<blockquote>
+<p><strong>Examples:</strong></p>
+<p>Given <code>&quot;abcabcbb&quot;</code>, the answer is <code>&quot;abc&quot;</code>, which the length is 3.</p>
+<p>Given <code>&quot;bbbbb&quot;</code>, the answer is <code>&quot;b&quot;</code>, with the length of 1.</p>
+<p>Given <code>&quot;pwwkew&quot;</code>, the answer is <code>&quot;wke&quot;</code>, with the length of 3. Note that the answer must be a <strong>substring</strong>, <code>&quot;pwke&quot;</code> is a <em>subsequence</em> and not a substring.<br>好的，了解題目後那就開始吧！</p>
+</blockquote>
+<p>首先是測試的初始化以及第一個測試案例：傳入單一字元，回傳長度１</p>
+<p><a href="https://gist.github.com/yohey03518/0c7461a26d088eee5ef8a5682491e416" target="_blank" rel="external">https://gist.github.com/yohey03518/0c7461a26d088eee5ef8a5682491e416</a></p>
+<p>&nbsp;</p>
+<p>執行測試，但因還沒實作，所以當然會是失敗：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult11.png" alt="TestResult1"></p>
+<p>針對測試的需求，完成剛好可滿足測試案例的程式，並執行測試：</p>
+<p><a href="https://gist.github.com/yohey03518/9459dfbb6a9f82b51bed3f38fb1e895a" target="_blank" rel="external">https://gist.github.com/yohey03518/9459dfbb6a9f82b51bed3f38fb1e895a</a></p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult21.png" alt="TestResult2"></p>
+<p>寫到這邊，總覺得遵循TDD的開發方式來進行，</p>
+<p>這一步似乎有點太小步了，不過在上一題(<a href="https://yohey66.wordpress.com/2017/06/22/leetcode-2-add-two-numbers/" target="_blank" rel="external">AddTwoNumber</a>)中，</p>
+<p>曾經試著想要加快腳步跳著進行，</p>
+<p>卻踏上了自己不喜歡的節奏－－不斷的trial and error，</p>
+<p>所以今天還是乖乖的一步一步來吧！</p>
+<p>&nbsp;</p>
+<p>接著第二個測試案例，開始出現重複的字元，</p>
+<p>傳入”aa”字串，回傳長度為1：</p>
+<p><a href="https://gist.github.com/yohey03518/47e51eddd1561b81ef881a2ca495824c" target="_blank" rel="external">https://gist.github.com/yohey03518/47e51eddd1561b81ef881a2ca495824c</a></p>
+<p>不意外的，測試失敗囉，不過這都在預期之中</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult32.png" alt="TestResult3"></p>
+<p>趕緊來讓測試通過：</p>
+<p><a href="https://gist.github.com/yohey03518/f09a6a4f9826268ad29cc10a548bb500" target="_blank" rel="external">https://gist.github.com/yohey03518/f09a6a4f9826268ad29cc10a548bb500</a></p>
+<p>針對所有字元都相等的狀況直接回傳１，便可使測試通過</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult42.png" alt="TestResult4"></p>
+<p>當然這樣的程式碼是不可能符合全部需求的，趕緊來定義下一個測試案例：</p>
+<p>傳入”aab”回傳長度2</p>
+<p><a href="https://gist.github.com/yohey03518/f0818584201d19a0efee346b03ff96b5" target="_blank" rel="external">https://gist.github.com/yohey03518/f0818584201d19a0efee346b03ff96b5</a></p>
+<p>測試失敗，接著實作：</p>
+<p><a href="https://gist.github.com/yohey03518/f65fdfc17c5d3cccda6d2c1d52ff2732" target="_blank" rel="external">https://gist.github.com/yohey03518/f65fdfc17c5d3cccda6d2c1d52ff2732</a></p>
+<p>簡單介紹一下想法，</p>
+<p>走訪字串中的每一個字元，並且透過一個list儲存走訪過程中字元不重複的字串，</p>
+<p>若遇到重複的字元，則計算長度是否大於現在的最大值，</p>
+<p>若是則改變其值，最後進行回傳。</p>
+<p>&nbsp;</p>
+<p>好的，那測試也順利通過了</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult51.png" alt="TestResult5"></p>
+<p><span style="line-height:inherit;">(這樣寫完後總覺得好像不夠周詳，也許是自信心不夠吧 XD)</span></p>
+<p>在思考下一個測試案例時，總感覺剛剛實作的想法好像已經可以是個solution，</p>
+<p>或許是自行設計的測試案例很到位，又或是這一步跨得太大，</p>
+<p>我想… 經驗多了慢慢就會有感覺的吧！</p>
+<p>那先來將官網上的example三個測試案例放上去並執行測試：</p>
+<p>嗯！蠻順利的，都通過了</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult6.png" alt="TestResult6"></p>
+<p>&nbsp;</p>
+<p>現在的結果，功能面似乎已經達成(至少滿足設計的測試案例)，</p>
+<p>那就來提交看看吧！</p>
+<p>結果..</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/submiterror1.png" alt="SubmitError1"></p>
+<p>原來先前的想法是完全錯的，</p>
+<p>忽略了子字串起算點有可能是先前使用過的字元，</p>
+<p>再回去檢視官方的測試案例，例如”abcabcbb”回傳3，完全是運氣好啊(淚)，</p>
+<p>不過也不用難過，趕緊補上測試案例並讓它通過吧！</p>
+<p><a href="https://gist.github.com/yohey03518/5df8b3eac9638e257f4365d274b809c6" target="_blank" rel="external">https://gist.github.com/yohey03518/5df8b3eac9638e257f4365d274b809c6</a></p>
+<p>把原先的程式做一些調整，讓所有的字元都可以當成一個新的起始點(萬惡的兩層for又出現啦~)</p>
+<p><a href="https://gist.github.com/yohey03518/bd50cd2e8d9a5b4486d28dae524fad0f" target="_blank" rel="external">https://gist.github.com/yohey03518/bd50cd2e8d9a5b4486d28dae524fad0f</a></p>
+<p>&nbsp;</p>
+<p>很順利的，剛剛卡住的測試案例也通過了</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult7.png" alt="TestResult7"></p>
+<p>接著就Submit…</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/submiterror2.png" alt="SubmitError2"></p>
+<p>好的！是熟悉的Time Limit Exceeded呢！</p>
+<p>不過算是個可以提前預見的結果，在這樣的節奏下，</p>
+<p>了解自己的需求從「達成題目需求」至「效能調校」的過程，</p>
+<p>讓自己可以一次只專注一件事情，再透過測試案例的保護，</p>
+<p>來重構程式碼做效能調校，感覺是蠻踏實的！</p>
+<p>廢話說那麼多，還是趕緊來重構吧</p>
+<p>&nbsp;</p>
+<p>在前面測試案例及最後執行的過程中，</p>
+<p>目前可以得知只要滿足現有的這些測試案例，</p>
+<p>就可以達成需求，因此在這樣的測試保護下，</p>
+<p>我們可以很安心的進行重構，</p>
+<p>重構的目標只有一個，就是滿足測試案例(然後效能要快一點)</p>
+<p>&nbsp;</p>
+<p>以下是思考許久後的撰寫的結果：</p>
+<p><a href="https://gist.github.com/yohey03518/1b85b1f466d3150d1a39be213e130fa9" target="_blank" rel="external">https://gist.github.com/yohey03518/1b85b1f466d3150d1a39be213e130fa9</a></p>
+<p>想法是走訪字元的過程中，去記錄目前正在try最長長度的各字元所在陣列的索引值，</p>
+<p>當遇到重複的值時，除計算目前長度大小外，</p>
+<p>便從重複字元的下一個字元開始重新走訪，</p>
+<p>例如abcecp，當從a開始走訪走到第二個c時，</p>
+<p>除記錄目前長度外(目前為4)，便會從第一個c的下一個字元(e)重啟走訪。</p>
+<p>&nbsp;</p>
+<p>好的那解釋完畢，測試也通過了，趕緊信心滿滿的submit看看</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/submitresult1.png" alt="SubmitResult1"></p>
+<p>通過啦！！放煙火！！</p>
+<p>但是執行時間似乎還是差強人意阿～</p>
+<p>不過在這樣的流程下，總算是達成要求了，</p>
+<p>仍然值得給自己些鼓勵的唷！</p>
+<p>之後進行重構挑戰更好的執行時間會再補上和各位分享的！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/06/29/leetcode-3-longest-substring-without-repeating-characters/" data-id="cj5l58mi6000jtkv3uohd94sx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-leetcode-2-add-two-numbers" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/22/leetcode-2-add-two-numbers/" class="article-date">
+  <time datetime="2017-06-22T15:36:50.000Z" itemprop="datePublished">2017-06-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/22/leetcode-2-add-two-numbers/">[LeetCode] 2. Add Two Numbers</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>這次來做的是Algorithms的第二題，難度為Medium，</p>
+<p>題目要求是傳入兩個代表某非負整數的linked list(node value為one digit的非負整數)，</p>
+<p>回傳相加後的結果，型態和傳入的linked list一樣。</p>
+<p>範例(取自LeetCode)：</p>
+<p>假設執行342+465要計算出807這個值，</p>
+<p>則</p>
+<p><strong>Input:</strong> (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br><strong>Output:</strong> 7 -&gt; 0 -&gt; 8</p>
+<p>(<a href="https://leetcode.com/problems/add-two-numbers" target="_blank" rel="external">題目連結</a>)</p>
+<p>首先一樣依照TDD的模式，</p>
+<p>先寫好測試案例，</p>
+<p>附帶一提，題目中也有定義好要使用的linked list類別</p>
+<p><a href="https://gist.github.com/yohey03518/3f0754948de66e454699b6919873855d" target="_blank" rel="external">https://gist.github.com/yohey03518/3f0754948de66e454699b6919873855d</a></p>
+<p>測試初始化</p>
+<p><a href="https://gist.github.com/yohey03518/9ccd4e47c615bf7d592bbc6a11299f53" target="_blank" rel="external">https://gist.github.com/yohey03518/9ccd4e47c615bf7d592bbc6a11299f53</a></p>
+<p>第一個測試案例：單位數的相加，並且相加結果不超過10</p>
+<p><a href="https://gist.github.com/yohey03518/7759a430be66d09ef51e0f50c617343a" target="_blank" rel="external">https://gist.github.com/yohey03518/7759a430be66d09ef51e0f50c617343a</a></p>
+<p>&nbsp;</p>
+<p>接著實作method AddTwoNumbers滿足此需求</p>
+<p><a href="https://gist.github.com/yohey03518/3661ea1b2b14c800677b44861cd7d1a7" target="_blank" rel="external">https://gist.github.com/yohey03518/3661ea1b2b14c800677b44861cd7d1a7</a></p>
+<p>&nbsp;</p>
+<p>很好，測試通過了</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult1.png" alt="TestResult1"></p>
+<p>接著下一個測試案例：兩個單位數相加大小會超過十(雙位數)</p>
+<p><a href="https://gist.github.com/yohey03518/289627c3cdb4e854f49035d21a70c4e6" target="_blank" rel="external">https://gist.github.com/yohey03518/289627c3cdb4e854f49035d21a70c4e6</a></p>
+<p>想當然執行測試會失敗，趕緊來撰寫符合此兩規則的程式：</p>
+<p>判斷若結果超過十，則要分位數去處理並回傳含有兩個節點的結果</p>
+<p><a href="https://gist.github.com/yohey03518/49bc635dd57a5c58e2af3da51e276a8e" target="_blank" rel="external">https://gist.github.com/yohey03518/49bc635dd57a5c58e2af3da51e276a8e</a></p>
+<p>的確測試也通過了</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult2.png" alt="TestResult2"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>接著第三個測試案例，不同位數的相加但不涉及進位，</p>
+<p>被加數和加數顛倒來當作不同測試案例</p>
+<p><a href="https://gist.github.com/yohey03518/734bd7846ff3913f7d4187a7908d5a89" target="_blank" rel="external">https://gist.github.com/yohey03518/734bd7846ff3913f7d4187a7908d5a89</a></p>
+<p>這邊就要開始思考該用何種方式去爬所有的位數並做運算，</p>
+<p>想法是在做加法時都會個位數十位數對齊去進行，</p>
+<p>那就分別各用一個指標去走訪兩個input值，</p>
+<p>去做個位數相加、十位數相加…以此類推，</p>
+<p>這想法跟原先的寫法有些不同，因此要來重構一下</p>
+<p><a href="https://gist.github.com/yohey03518/473718e59c141a07bca4e355aebe0677" target="_blank" rel="external">https://gist.github.com/yohey03518/473718e59c141a07bca4e355aebe0677</a></p>
+<p>比較特別的是為了讓儲存加總結果的list可以順利讓指標走訪，</p>
+<p>必須先new一個起始點，因此最終的結果是從resultStartPoint的next開始回傳。</p>
+<p>&nbsp;</p>
+<p>好的那馬上來執行測試…</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult31.png" alt="TestResult3"></p>
+<p>Oops！最新的測試案例是通過了，</p>
+<p>但在我們的有涉及進位的第二項測試案例上卻是出錯的，</p>
+<p>不過也沒什麼好難過的，TDD的過程就是滿足當下的需求以及前項的測試案例，</p>
+<p>因此只要再調整一下讓它滿足其餘測試案例即可，</p>
+<p>意即要針對前項實作的Line23針對可能的進位做處理，</p>
+<p>程式中加上另一個變數來處理進位，</p>
+<p>實作修改如下</p>
+<p><a href="https://gist.github.com/yohey03518/df43945d34a69972c7795e05c44b6195" target="_blank" rel="external">https://gist.github.com/yohey03518/df43945d34a69972c7795e05c44b6195</a></p>
+<p>測試也順利都通過了</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult41.png" alt="TestResult4"></p>
+<p>接著下一個測試案例，多重進位，如3+99這種狀況會有兩次的進位</p>
+<p><a href="https://gist.github.com/yohey03518/f0ae3896c52e479694f29393129de840" target="_blank" rel="external">https://gist.github.com/yohey03518/f0ae3896c52e479694f29393129de840</a></p>
+<p>&nbsp;</p>
+<p>結果發現，運氣不錯！先前的案例似乎也包含著這樣的狀況，測試全通過</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testresult5.png" alt="TestResult5"></p>
+<p>嗯！總感覺是時候了，來Submit這一段code試試看吧！</p>
+<p>結果出乎意料地順利呢！</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/submitresult.png" alt="SubmitResult"></p>
+<p>打敗了88.67%的玩家，看來這數字某種程度上真的是個成就感呢！</p>
+<p>那.. 今晚就來睡個好覺啦！</p>
+<p>&nbsp;</p>
+<p>後記：</p>
+<p>其實這一題在做的時候已經很晚接近不得不睡的時間了(還是個上班族RRR)，</p>
+<p>因此完成兩個測試案例後就想說隔天再繼續好了，</p>
+<p>發現TDD的好處大概有一點也是在這，一個階段一個階段的進行，</p>
+<p>不用去管之後該怎辦，專注在眼前的需求即可。</p>
+<p>但身為一個頭腦簡單的攻城屍，睡前還是忍不住想快點知道submit結果(數字殺人阿~~)，</p>
+<p>於是就暫時跳過TDD的步驟直接開始試著寫符合全部案例的實作，</p>
+<p>於是就是不斷的trial and error，修改一次後就submit一次，</p>
+<p>來來回回不知道總共幾遍，讓心情越來越毛躁，</p>
+<p>這種感覺真的不是很好而且也睡不好！！！</p>
+<p>也因此隔天再回到TDD的流程中，發現一切是如此的簡單美好，</p>
+<p>看來也是個意外的收穫及經驗呀！</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/06/22/leetcode-2-add-two-numbers/" data-id="cj5l58mi3000ftkv39irgu39x" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-leetcode-1-two-sum" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/20/leetcode-1-two-sum/" class="article-date">
+  <time datetime="2017-06-19T17:51:29.000Z" itemprop="datePublished">2017-06-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/20/leetcode-1-two-sum/">[LeetCode] 1. Two Sum</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近終於把家裡這台PC給處理好了，</p>
+<p>那在這個失去熱情失去人生方向的小小低潮中，</p>
+<p>來做做LeetCode嘗試點不一樣的事吧！</p>
+<p><a href="https://leetcode.com/problems/two-sum/" target="_blank" rel="external">“Two Sum”</a>這題是Algorithms項目中難度為Easy且為序號1的題目。</p>
+<p>目標是傳入一個int陣列以及目標數字(int)，</p>
+<p>使得陣列中某兩元素值相加可等於目標數字，</p>
+<p>並且回傳此兩值在此陣列中的索引。</p>
+<p>範例：(取自<a href="https://leetcode.com/problems/two-sum/" target="_blank" rel="external">LeetCode</a>)</p>
+<p><pre>Given nums = [2, 7, 11, 15], target = 9,</pre></p>
+<p>Because nums[<strong>0</strong>] + nums[<strong>1</strong>] = 2 + 7 = 9,<br>return [<strong>0</strong>, <strong>1</strong>].<br>而最近粗淺的學習了TDD的開發方式，</p>
+<p>也參考了91大以TDD的模式來解LeetCode題目的方式，</p>
+<p>(<a href="https://dotblogs.com.tw/hatelove/2017/03/22/leetcode-58-length-of-last-word" target="_blank" rel="external">[TDD]LeetCode 58. Length Of Last Word</a>)</p>
+<p>那就來試著TDD吧！</p>
+<p>首先開啟了測試專案及類別後，先定義執行每項測試初始化目標物件的動作：</p>
+<p>[code language=”csharp”]<br>[TestClass]<br>public class No1Test_TwoSum<br>{<br>    private No1_TwoSum solution;</p>
+<pre><code>[TestInitialize]
+public void Init()
+{
+   solution = new No1_TwoSum();
+}
+</code></pre><p>}<br>[/code]</p>
+<p>尚未實作的Solution：</p>
+<p>[code language=”csharp”]<br>public class No1_TwoSum<br>{<br>    public int[] GetSolution(int[] nums, int target)<br>    {<br>        throw new NotImplementedException();<br>    }<br>}<br>[/code]</p>
+<p>接著建立第一項測試案例：</p>
+<p>給予陣列{1, 2} 且target為3，則回傳之陣列需有0及1兩個值，</p>
+<p>代表3是由傳入的陣列索引0及1的值所相加而成</p>
+<p>[code language=”csharp”]<br>[TestMethod]<br>public void ArrayHas1_2_AndTargetIs3_Return0And1()<br>{<br>    int[] array = new int[] { 1, 2 };<br>    int target = 3;</p>
+<pre><code>int[] result = solution.GetSolution(array, target);
+
+Assert.IsTrue(result.Contains(0));
+Assert.IsTrue(result.Contains(1));
+</code></pre><p>}<br>[/code]</p>
+<p>接著執行測試，果不其然因為還沒實作，當然是測試失敗：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/testfail1.png" alt="TestFail1"></p>
+<p>接著為了滿足測試的最小需求，簡單的撰寫code：</p>
+<p>[code language=”csharp”]<br>public int[] GetSolution(int[] nums, int target)<br>{<br>    if(nums[0] + nums[1] == target)<br>        return new int[]{ 0, 1 };<br>    else<br>        throw new Exception(“No match result!”);<br>}<br>[/code]</p>
+<p>&nbsp;</p>
+<p>再來執行測試，可以看到測試通過了<img src="https://yohey66.files.wordpress.com/2017/06/testsuccess1.png" alt="TestSuccess1.PNG"></p>
+<p>在這裡提倡一下Visual Studio的指令Ctrl+R, A，真的是個好用的指令，</p>
+<p>它可以在建置完後自動執行所有測試，也代表新寫的code一定不能使測試壞掉，</p>
+<p>多重的功用已經成為了小弟我寫完程式要按建置的替代方式了！</p>
+<p>&nbsp;</p>
+<p>接著小弟認為在這題目中，沒有過多的需求，</p>
+<p>也因此第二、第三及之後的測試案例應該都需要有個一致的寫法，</p>
+<p>故一次撰寫了三個測試案例，包含LeetCode關於這題的Custom Testcase</p>
+<p>[code language=”csharp”]<br>[TestMethod]<br>public void ArrayHas1_2_3_AndTargetIs4_Return0And2()<br>{<br>    int[] array = new int[] { 1, 2, 3 };<br>    int target = 4;</p>
+<pre><code>int[] result = solution.GetSolution(array, target);
+
+Assert.IsTrue(result.Contains(0));
+Assert.IsTrue(result.Contains(2));
+</code></pre><p>}</p>
+<p>[TestMethod]<br>public void ArrayHas2_7_11_15_AndTargetIs9_Return0And1()<br>{<br>    int[] array = new int[] { 2, 7, 11, 15 };<br>    int target = 9;</p>
+<pre><code>int[] result = solution.GetSolution(array, target);
+
+Assert.IsTrue(result.Contains(0));
+Assert.IsTrue(result.Contains(1));
+</code></pre><p>}</p>
+<p>// LeetCode的Custom Testcase<br>[TestMethod]<br>public void ArrayHas3_2_4_AndTargetIs6_Return1And2()<br>{<br>    int[] array = new int[] { 3, 2, 4 };<br>    int target = 6;</p>
+<pre><code>int[] result = solution.GetSolution(array, target);
+
+Assert.IsTrue(result.Contains(2));
+Assert.IsTrue(result.Contains(1));
+</code></pre><p>}<br>[/code]</p>
+<p>(其實關於TDD的節奏真的拿捏的還不是很到位呀～不過就慢慢練習囉)</p>
+<p>相當然爾執行測試會是失敗的，所以要來重構原先的代碼，</p>
+<p>想法：恩… 要達成這個目標，一定要讓所有數字兩兩相加比對後才知道結果，</p>
+<p>那就用兩個for迴圈把它解決掉吧！</p>
+<p>[code language=”csharp”]<br>public int[] GetSolution(int[] nums, int target)<br>{<br>    for (int index1 = 0; index1 &lt; nums.Count(); index1++)<br>    {<br>        for (int index2 = (index1 + 1); index2 &lt; nums.Count(); index2++)<br>        {<br>            if (nums[index1] + nums[index2] == target)<br>                return new int[] { index1, index2 };<br>        }<br>    }<br>    throw new Exception(“No match result!”);<br>}<br>[/code]</p>
+<p>於是神奇的事情就這麼發生了，各位觀眾，四個測試案例都通過！</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/success4.png" alt="Success4"></p>
+<p>那還不趕快來Submit這段Code然後好好的去睡個覺嗎？</p>
+<p>結果… 燈冷～紅燈啦！！</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/timelimit.png" alt="TimeLimit"></p>
+<p>原來在LeetCode中，不是只有單純的成功跟失敗而已，</p>
+<p>包含時間複雜度的因素也必須考量在內(難怪寫出兩個for迴圈時心裡總覺得毛毛der)，</p>
+<p>當測試資料筆數變多時(陣列大小到達一萬多筆)，會超過執行時間的限制。</p>
+<p>那當然就要再來重構一下解法啦，希望可以將原先複雜度Ｏ(n平方)改為Ｏ(n)，</p>
+<p>&nbsp;</p>
+<p>想了一陣子，目標就是只可以走訪陣列一次，那就必須有另一個地方紀錄被走訪的值，</p>
+<p>這邊使用C#的Map型態–Dictionary來進行，</p>
+<p>根據走訪過的值，Map的Key值存入此被走訪到的值還需要加多少才可以達成target，</p>
+<p>Value則存放此走訪的值的索引，</p>
+<p>(也就是假設陣列索引走訪到3，值為5，目標為7，</p>
+<p>則Map存放&lt;7-5(期望之後要有的值), 3(索引值)&gt;)</p>
+<p>&nbsp;</p>
+<p>[code language=”csharp”]<br>public int[] GetSolution(int[] nums, int target)<br>{<br>    // First int means the excepted second value, the second int means the index of first value<br>    Dictionary exceptValueMap = new Dictionary();<br>    for (int index1 = 0; index1 &lt; nums.Count(); index1++)<br>    {<br>        // the value in array matches the excepted value<br>        if (exceptValueMap.ContainsKey(nums[index1]))<br>        {<br>            return new int[] { exceptValueMap[nums[index1]], index1 };<br>        }<br>        else<br>        {<br>            exceptValueMap.Add(target - nums[index1], index1);<br>        }<br>    }<br>    throw new Exception(&quot;No match result!&quot;);<br>}<br>[/code]</p>
+<p>&nbsp;</p>
+<p>好的，測試也順利地通過了，趕快來Submit一下：</p>
+<p>結果…</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/submitfail2.png" alt="submitfail2"></p>
+<p>在某項測試案例上發生了字典Key值重複的問題，</p>
+<p>趕緊檢視一下測試資料，發現陣列中真的有出現重複的值(這應該是題目中沒提到的)，</p>
+<p>想了一下其實這種狀況在軟體專案的開發中還蠻常見的，</p>
+<p>除了需求的變動外，例外狀況也常會是開發階段考慮不到的。</p>
+<p>但透過單元測試的保護，即使出錯了，只要將測試案例補上並適度修改程式碼，</p>
+<p>那就可確保未來不會再遇到相同的錯誤了。</p>
+<p>&nbsp;</p>
+<p>因此簡單的加入判斷式以調整程式碼：</p>
+<p><a href="https://gist.github.com/yohey03518/bfcb58fcc9b6328073c070d2c303be2e" target="_blank" rel="external">https://gist.github.com/yohey03518/bfcb58fcc9b6328073c070d2c303be2e</a></p>
+<p><pre></pre><br>修改完成後，執行測試(包含最後因Key值重複的測試案例)，</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/success5.png" alt="Success5"></p>
+<p>皆顯示成功，接著Submit：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/06/leetsuccess.png" alt="LeetSuccess"></p>
+<p>成功啦！而且居然有如此詳細的資訊，還可以跟使用者說明執行時間打敗了多少人，</p>
+<p>嗯～打敗了85.46%的玩家，看來今晚可以睡個好覺了呢！</p>
+<p>&nbsp;</p>
+<p>後記：</p>
+<p>其實在LeetCode上Key值會發生重複的那一項測試案例中，</p>
+<p>並沒有顯示預期Return的結果，</p>
+<p>反而小弟我是使用先前兩個for迴圈的那段舊程式碼來找出結果後，</p>
+<p>才組成測試案例供重構後的程式碼驗證用，</p>
+<p>我想…這也算是天生我材必有用的概念吧～</p>
+<p>&nbsp;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/06/20/leetcode-1-two-sum/" data-id="cj5l58mi2000dtkv3z4ocnzrv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-visual-studio-tools-sql-server-e8-b3-87-e6-96-99-e5-8f-8a-e7-b5-90-e6-a7-8b-e6-8f-8f-e8-bf-b0-e6-af-94-e8-bc-83" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/19/visual-studio-tools-sql-server-e8-b3-87-e6-96-99-e5-8f-8a-e7-b5-90-e6-a7-8b-e6-8f-8f-e8-bf-b0-e6-af-94-e8-bc-83/" class="article-date">
+  <time datetime="2017-04-19T03:52:10.000Z" itemprop="datePublished">2017-04-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/19/visual-studio-tools-sql-server-e8-b3-87-e6-96-99-e5-8f-8a-e7-b5-90-e6-a7-8b-e6-8f-8f-e8-bf-b0-e6-af-94-e8-bc-83/">[Visual Studio tools] SQL Server資料及結構描述比較</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在專案開發的過程中，有時資料庫會分成測試資料庫與正式資料庫，又或是正在使用的資料庫要和備份的那一份做些比較看看差異在哪，來找出一些遺漏的資料或是欄位，這時不免就要透過一些工具來協助了。</p>
+<p>在這邊簡單介紹在Visual Studio上針對SQL Server進行比對的小工具。</p>
+<p>這邊使用AdventureWork2012資料庫當作範例。</p>
+<p>首先先在local準備兩個相同的資料庫，名稱結尾分別設為Main及Child，Main為主要在使用的資料庫，而Child則是必須follow Main資料庫去做更新的資料庫，如下</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/1.png" alt="1"></p>
+<p>接著我們將Child資料庫的Table Person.Address的欄位ModifiedDate刪除，</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/2.png" alt="2"></p>
+<p>接著開啟Visual Studio(此處使用VS 2015 Community)後，點選工作列-&gt;工具-&gt;SQL Server-&gt;新增結構描述比較</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/3.png" alt="3"></p>
+<p>接著在左邊選入Main資料庫，右邊選入Child資料庫，</p>
+<p>按下左上角的 「比較」即可看到結果：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/4.png" alt="4"></p>
+<p>依照結果的描述來說，Main相對於Child而言，在Person.Address資料表中多了一個欄位ModifiedDate，因此若Child要Follow Main的狀況來做更動，則必須新增此欄位。</p>
+<p>而這個小工具也已經幫我們準備好了，只要透過產生指令碼的按鈕(Alt+Shift+G)</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/5.png" alt="5"></p>
+<p>便會幫我們產生針對Child新增欄位的T-SQL指令了</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/6.png" alt="6"></p>
+<p>接著介紹資料內容的比較方式：</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/7.png" alt="7"></p>
+<p>將Child資料庫的Person.EmailAddress EmailAddressID為1的EmailAddress由原先的”ken0@adventure-works.com”改為”newMail@gmail.com”</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/8.png" alt="8"></p>
+<p>接著回到VS上，點選「新增資料比較後」，會出現如下視窗，一樣在左側選入Main，右側選入Child，點選下一步，並勾選資料表，代表僅針對資料表資料做比較<img src="https://yohey66.files.wordpress.com/2017/04/9.png" alt="9"></p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/10.png" alt="10"></p>
+<p>按下完成，分析之後會出現如下畫面，會發現Person.EmailAddress中那筆不同的資料會被找出來</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/13.png" alt="13"></p>
+<p>接著同樣點選「產生指令碼」後，即可得到將Child與Main同步的指令，</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/04/12.png" alt="12.PNG"></p>
+<p>比較有趣的是在註解的第三行</p>
+<blockquote>
+<p>請在 localhost.AdventureWorks2012_Child (DESKTOP-4PFP88F\User) 上執行此指令碼，使它與 localhost.AdventureWorks2012_Main (DESKTOP-4PFP88F\User) 相同。<br>寫得相當詳細，執行此指令後可把Child改成與Main相同。</p>
+</blockquote>
+<p>後記：這項工具除了還可以針對View、Stored Procedure或是Function做比較，只要能在一部機器上連線到兩個不同位址的資料庫，則也可以順利的進行比對。若可善加利用，則可以減少許多在維護資料庫上所需耗費的成本。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/19/visual-studio-tools-sql-server-e8-b3-87-e6-96-99-e5-8f-8a-e7-b5-90-e6-a7-8b-e6-8f-8f-e8-bf-b0-e6-af-94-e8-bc-83/" data-id="cj5l58mix0015tkv3q2l9ru5i" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-c-net-e9-80-8f-e9-81-8ejson-net-e9-80-b2-e8-a1-8cxml-e8-88-87object-e8-bd-89-e6-8f-9b" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/22/c-net-e9-80-8f-e9-81-8ejson-net-e9-80-b2-e8-a1-8cxml-e8-88-87object-e8-bd-89-e6-8f-9b/" class="article-date">
+  <time datetime="2017-02-22T03:21:08.000Z" itemprop="datePublished">2017-02-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分類/">未分類</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/22/c-net-e9-80-8f-e9-81-8ejson-net-e9-80-b2-e8-a1-8cxml-e8-88-87object-e8-bd-89-e6-8f-9b/">[C#.NET] 透過Json.NET進行XML與Object轉換</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在做資料交換時，我們常會使用Json格式或是XML格式來進行。</p>
+<p>但若選擇使用XML，則在程式中需透過XML的轉換來將資料mapping到我們的物件上或是要冗長的Create Node來產生XML以便進行操作。</p>
+<p>先前有篇文章在說明如何透過XmlDocument來取得XML的節點資料，可參考<a href="https://yohey66.wordpress.com/2016/10/04/c-net-mvc-%e8%a7%a3%e6%b1%baxmlreader-readelementcontentas-%e6%96%b9%e6%b3%95%e6%9c%83%e8%b7%b3%e9%81%8e%e5%85%83%e7%b4%a0%e4%b9%8b%e6%9b%bf%e4%bb%a3%e6%96%b9%e6%a1%88/" target="_blank" rel="external">[.NET MVC] 解決XmlReader ReadElementContentAs* 方法會跳過元素之替代方案</a>。</p>
+<p>若資料節點相當的多，程式要一行一行的去針對每個點去處理，豈不就相當麻煩？</p>
+<p>秉持著懶惰的心態，去思考如果可以把程式中的物件直接對應轉換成XML，那豈不就只要準備好我們要的物件，便可以簡單的做轉換，無須在一個node一個node去做處理，</p>
+<p>簡單查了一下資料，發現Json.NET可以幫我們做到這件事！</p>
+<p>需求：將如下的XML格式轉換成物件，以及從物件轉成如下的XML格式</p>
+<p>[code language=”xml”]<br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<br>&lt;HEADER&gt;<br>  &lt;UserID&gt;A1234567&lt;/UserID&gt;<br>  &lt;UserName&gt;王曉明&lt;/UserName&gt;<br>  &lt;UserDesc&gt;handsome&lt;/UserDesc&gt;<br>  &lt;Family&gt;<br>   &lt;Member&gt;阿爸&lt;/Member&gt;<br>   &lt;Member&gt;阿母&lt;/Member&gt;<br>   &lt;Member&gt;阿姐&lt;/Member&gt;<br>  &lt;/Family&gt;<br> &lt;/HEADER&gt;<br>[/code]</p>
+<p>首先先產出對應的巢狀物件(注意Property的名稱要與Xml的節點名稱相同)，如下：</p>
+<p>[code language=”csharp”]</p>
+<p> public class Response<br> {<br>     public Header HEADER { get; set; }<br> }</p>
+<p> public class Header<br> {<br>     public string UserID { get; set; }<br>     public string UserName { get; set; }<br>     public string UserDesc { get; set; }<br>     public Family Family { get; set; }<br> }</p>
+<p> public class Family<br> {<br>     public List&lt;string&gt; Member { get; set; }<br> }</p>
+<p>[/code]</p>
+<p>將XML轉成物件的方式如下：</p>
+<p>[code language=”csharp”]</p>
+<p> // 取得如上的XML字串<br> string xmlInput = GetXmlData();<br> // 透過XmlDocument讀入<br> XmlDocument xmlDoc = new XmlDocument();<br> xmlDoc.LoadXml(xmlInput);<br> // 讀取HEADER節點<br> XmlNode responseNode = xmlDoc.SelectSingleNode(&quot;/HEADER&quot;);<br> // 透過Json.NET將XmlNode轉為Json格式字串<br> string jsonText = JsonConvert.SerializeXmlNode(responseNode);<br> // 透過Json.NET反序列化為物件<br> Response responseObj = JsonConvert.DeserializeObject&lt;Response&gt;(jsonText);</p>
+<p>[/code]</p>
+<p>如此一來，便可以將XML mapping到我們的物件上了，</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/02/1.png" alt="1"></p>
+<p><img src="https://yohey66.files.wordpress.com/2017/02/2.png" alt="2"></p>
+<p>接下來操作由物件轉為Xml：</p>
+<p>[code language=”csharp”]</p>
+<p>// 初始化物件<br> Response responseObj = new Response();<br> responseObj.HEADER = new Header();<br> responseObj.HEADER.Family = new Family();<br> responseObj.HEADER.Family.Member = new List&lt;string&gt;();</p>
+<p>// 給予值<br> responseObj.HEADER.UserID = &quot;B987654&quot;;<br> responseObj.HEADER.UserName = &quot;張帥帥&quot;;<br> responseObj.HEADER.UserDesc = &quot;有點蟀&quot;;<br> responseObj.HEADER.Family.Member.Add(&quot;老爸&quot;);<br> responseObj.HEADER.Family.Member.Add(&quot;老媽&quot;);<br> responseObj.HEADER.Family.Member.Add(&quot;女朋友&quot;);</p>
+<p>// 將結果的object轉成XML格式後，加上標頭並回傳<br> string jsonText = JsonConvert.SerializeObject(responseObj);<br> XmlDocument resultXml = JsonConvert.DeserializeXmlNode(jsonText);<br> resultXml.PrependChild(resultXml.CreateXmlDeclaration(&quot;1.0&quot;, &quot;utf-8&quot;, null));</p>
+<p>[/code]</p>
+<p><img src="https://yohey66.files.wordpress.com/2017/02/3.png" alt="3"></p>
+<p>結論：透過Json.NET的使用，便可發現處理這類資料時最麻煩的部分僅僅在於建立物件上，省去了許多一個節點一個節點去做轉換的功夫，至於建立對應物件的熟悉度，就有待各位自行練習了。</p>
+<p>比較值得注意的是XML開頭的一些標頭，我們可以透過如上最後一行程式碼把它加上去，即可快速的組成Xml囉！</p>
+<p>補充：刪除null值的節點 - <a href="https://social.msdn.microsoft.com/Forums/en-US/7a17f1b8-4a8f-4b7f-9d49-7ce819c04a0f/how-to-remove-empty-element-from-xml-file?forum=xmlandnetfx" target="_blank" rel="external">MSDN</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/02/22/c-net-e9-80-8f-e9-81-8ejson-net-e9-80-b2-e8-a1-8cxml-e8-88-87object-e8-bd-89-e6-8f-9b/" data-id="cj5l58mhg0002tkv3bm9i7q0s" class="article-share-link">Share</a>
       
       
     </footer>
@@ -107,23 +1035,19 @@
 
   
 
+
+  <nav id="page-nav">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
+  </nav>
 </section>
         
           <aside id="sidebar">
   
     
-
-  
-    
-
-  
-    
-  
-    
   <div class="widget-wrap">
-    <h3 class="widget-title">Arkiv</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-NET-MVC/">C# .NET MVC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/好用工具分享/">好用工具分享</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分類/">未分類</a></li></ul>
     </div>
   </div>
 
@@ -131,12 +1055,57 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Siste innlegg</h3>
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NET/">.NET</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KendoGrid/">KendoGrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XmlDocument/">XmlDocument</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XmlReader/">XmlReader</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/KendoGrid/" style="font-size: 10px;">KendoGrid</a> <a href="/tags/XmlDocument/" style="font-size: 10px;">XmlDocument</a> <a href="/tags/XmlReader/" style="font-size: 10px;">XmlReader</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
             <a href="/2017/07/25/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/18/convert-big5-to-utf8/">Convert Big5 To UTF8</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/sonarlint-x-visual-studio-e5-8d-b3-e6-99-82-e7-9a-84-e7-a8-8b-e5-bc-8f-e7-a2-bc-e9-9d-9c-e6-85-8b-e6-8e-83-e6-8f-8f-e5-b7-a5-e5-85-b7/">SonarLint × Visual Studio -  即時的程式碼靜態掃描工具</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/sql-server-e9-80-8f-e9-81-8etablockx-e8-aa-9e-e6-b3-95-e4-bb-a5-e9-81-bf-e5-85-8d-e5-8f-96-e8-99-9f-e5-8a-9f-e8-83-bd-e5-8f-96-e5-88-b0-e9-87-8d-e8-a4-87-e7-9a-84-e5-80-bc/">[SQL Server]透過TABLOCKX語法以避免取號功能取到重複的值</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/30/sql-server-not-in-e5-ad-90-e6-9f-a5-e8-a9-a2-e6-89-80-e8-bf-94-e5-9b-9e-e7-9a-84-e9-8c-af-e8-aa-a4-e7-b5-90-e6-9e-9c/">[SQL Server] Not In子查詢所返回的錯誤結果</a>
           </li>
         
       </ul>
